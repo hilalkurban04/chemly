@@ -1,39 +1,275 @@
-<div class="section note" id="tarihce">
-    <p class="section-label">06 — Kimya Tarihi</p>
-    <h2>Bilim İnsanları ve Katkıları</h2>
-    
-    <div class="list-item">
-        <h3>Empedokles</h3>
-        <p>4 element kuramı (toprak, ateş, hava, su). Görme olayı üzerine çalışmalar.</p>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kimyaya Katkı Sağlayan Bilim İnsanları</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #06080f;
+    --surface: #0d1117;
+    --border: #1a2332;
+    --accent: #5b8fa8;
+    --text: #dce6f0;
+    --muted: #6b7f94;
+    --heading: #a8c8e0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.75;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 52px;
+  }
+
+  .subject-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Space Mono', monospace;
+    font-size: clamp(18px, 4vw, 30px);
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: var(--heading);
+    line-height: 1.3;
+  }
+
+  .subtitle {
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+    border-radius: 2px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    position: relative;
+    transition: border-color 0.25s, transform 0.25s;
+    animation: fadeUp 0.5s ease both;
+    scroll-margin-top: 60px;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    left: -29px;
+    top: 28px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background: var(--bg);
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px 0 0 3px;
+    opacity: 0.5;
+  }
+
+  .card:hover {
+    border-color: #2a3a52;
+    transform: translateX(4px);
+  }
+
+  .card h2 {
+    font-family: 'Space Mono', monospace;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--heading);
+    margin-bottom: 14px;
+  }
+
+  .card ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .card ul li {
+    font-size: 15px;
+    padding-left: 20px;
+    position: relative;
+    color: var(--text);
+  }
+
+  .card ul li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--accent);
+  }
+
+  .card ul li strong {
+    color: #e8f0f8;
+    font-weight: 600;
+  }
+
+  .card:nth-child(1) { animation-delay: 0.05s; }
+  .card:nth-child(2) { animation-delay: 0.10s; }
+  .card:nth-child(3) { animation-delay: 0.15s; }
+  .card:nth-child(4) { animation-delay: 0.20s; }
+  .card:nth-child(5) { animation-delay: 0.25s; }
+  .card:nth-child(6) { animation-delay: 0.30s; }
+  .card:nth-child(7) { animation-delay: 0.35s; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 560px) {
+    .timeline { padding-left: 24px; }
+    .card { padding: 20px 18px; }
+    .card::before { left: -21px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header>
+    <p class="subject-tag">Kimya Tarihi</p>
+    <h1>Kimyaya Katkı Sağlayan<br>Bilim İnsanları</h1>
+    <p class="subtitle">Antik çağdan modern kimyaya</p>
+  </header>
+
+  <div class="timeline">
+
+    <div class="card" id="empedokles">
+      <h2>Empedokles</h2>
+      <ul>
+        <li>Yunan filozoftur</li>
+        <li>Bütün maddelerin <strong>toprak, ateş, hava ve su</strong>dan oluştuğunu düşündü</li>
+        <li>Işık ve görme üzerine çalıştı</li>
+      </ul>
     </div>
-    
-    <div class="list-item">
-        <h3>Democritus</h3>
-        <p>"Atomos" (bölünemeyen) kavramını ilk kullanan. Maddenin atomlardan oluştuğunu savundu.</p>
+
+    <div class="card" id="democritus">
+      <h2>Democritus</h2>
+      <ul>
+        <li><strong>Atom kavramını ilk kez ortaya attı</strong></li>
+        <li>Maddenin bölünemeyen en küçük parçasına <strong>atomos</strong> adını verdi</li>
+        <li>"Atomlar ve boş uzaydan başka hiçbir şey yoktur" dedi</li>
+      </ul>
     </div>
-    
-    <div class="list-item">
-        <h3>Aristo</h3>
-        <p>4 elementi; sıcak, soğuk, kuru ve ıslak özellikleri ile sınıflandırdı.</p>
+
+    <div class="card" id="aristo">
+      <h2>Aristo</h2>
+      <ul>
+        <li>4 elementin <strong>sıcak, soğuk, kuru, ıslak</strong> olmak üzere 4 temel özelliği olduğunu savundu</li>
+      </ul>
     </div>
-    
-    <div class="list-item">
-        <h3>Cabir bin Hayyan</h3>
-        <p>Modern laboratuvar ekipmanlarının öncüsü (imbik). Nitrik asit, sülfürik asit ve kral suyunu keşfetti.</p>
+
+    <div class="card" id="cabir">
+      <h2>Cabir bin Hayyan</h2>
+      <ul>
+        <li>Atomun parçalanabilir olduğunu düşündü</li>
+        <li><strong>Nitrik asit, hidrojen klorür, sülfürik asit</strong> ve <strong>kral suyunu</strong> keşfetti</li>
+        <li><strong>İmbik</strong>i keşfetti</li>
+        <li><strong>Baz</strong> kavramını ilk kullanan kişidir</li>
+      </ul>
     </div>
-    
-    <div class="list-item">
-        <h3>Ebûbekir er-Râzî</h3>
-        <p>Kostik soda, gliserin ve formik asidi keşfetti. Alkolü tıp alanında antiseptik olarak kullandı.</p>
+
+    <div class="card" id="razi">
+      <h2>Ebubekir er-Razi</h2>
+      <ul>
+        <li><strong>Kroze, fırın, kostik soda</strong> ve <strong>gliserin</strong>i buldu</li>
+        <li>Karıncalardan <strong>formik asit</strong>i elde etti</li>
+        <li><strong>Alkolü antiseptik</strong> olarak kullanan ilk kişidir</li>
+      </ul>
     </div>
-    
-    <div class="list-item">
-        <h3>Robert Boyle</h3>
-        <p>Gazların hacim-basınç ilişkisi. "Kuşkucu Kimyager" eseri. Modern element tanımını yapan ilk bilim insanıdır.</p>
+
+    <div class="card" id="boyle">
+      <h2>Robert Boyle</h2>
+      <ul>
+        <li>Gazların hacmi ve basıncının <strong>ters orantılı</strong> olduğunu buldu (Boyle Yasası)</li>
+        <li>Karışımlar ile bileşikler arasındaki farkı açıkladı</li>
+        <li><strong>Havanın sıkıştırılabileceği</strong> fikrini ortaya attı</li>
+        <li><em>Kuşkucu Kimyager</em> adlı eseri vardır</li>
+        <li>Elementi kendinden daha basit maddelere ayrılamayan madde olarak tanımladı</li>
+        <li><strong>Modern anlamda ilk element tanımını Robert Boyle yapmıştır</strong></li>
+      </ul>
     </div>
-    
-    <div class="list-item">
-        <h3>Antoine Lavoisier</h3>
-        <p>Kütlenin Korunumu Yasası. Yanma olayının oksijen ile olduğunu kanıtladı. Modern kimyanın kurucusudur.</p>
+
+    <div class="card" id="lavosier">
+      <h2>Antoine Lavoisier</h2>
+      <ul>
+        <li><strong>Kütlenin korunumu yasasını</strong> buldu</li>
+        <li>Yanma olayının <strong>oksijenle</strong> gerçekleştiğini kanıtladı</li>
+        <li><strong>Modern kimyanın kurucusu</strong> olarak kabul edilir</li>
+      </ul>
     </div>
+
+  </div>
 </div>
+</body>
+</html>
+    
