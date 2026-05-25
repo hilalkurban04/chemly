@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Chemly - Yaygın Bileşik Adları</title>
+
+<style>
+:root{
+--bg:#0b1120;
+--card:#111827;
+--accent:#38bdf8;
+--text:#e2e8f0;
+--border:#1e293b;
+}
+
+body.light{
+--bg:#0f172a;
+--card:#1e293b;
+--text:#f8fafc;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,sans-serif;
+}
+
+body{
+background:var(--bg);
+color:var(--text);
+padding:40px;
+transition:.3s;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+}
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+h1{
+color:var(--accent);
+}
+
+.theme-btn{
+background:#334155;
+border:none;
+padding:10px;
+border-radius:50%;
+cursor:pointer;
+}
+
+.search{
+width:100%;
+padding:14px;
+margin:20px 0;
+border:none;
+border-radius:10px;
+background:var(--card);
+color:var(--text);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:var(--card);
+border-radius:15px;
+overflow:hidden;
+}
+
+th,td{
+padding:15px;
+border-bottom:1px solid var(--border);
+text-align:left;
+}
+
+th{
+color:var(--accent);
+}
+
+tr:hover{
+background:rgba(56,189,248,0.08);
+}
+
+.mass{
+color:#fbbf24;
+font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+<nav style="background:#1e293b;padding:15px;border-radius:10px;">
+<a href="index.html" style="color:#38bdf8;margin-right:20px;text-decoration:none;">🏠 Ana Sayfa</a>
+<a href="bilgi.html" style="color:#38bdf8;text-decoration:none;">📖 Bilgi Merkezi</a>
+</nav>
+
+<button class="theme-btn" id="theme">☀️</button>
+</header>
+
+<h1>Yaygın Bileşik Adları</h1>
+
+<input type="text" class="search" id="search" placeholder="Madde ara..." onkeyup="filterChem()">
+
+<table>
+<thead>
+<tr>
+<th>Yaygın Ad</th>
+<th>Formül</th>
+<th>Sistematik Ad</th>
+</tr>
+</thead>
+
+<tbody id="body"></tbody>
+</table>
+
+</div>
+
+<script>
+
+const data = [
+{y:"Kezzap",f:"HNO₃",s:"Nitrik Asit"},
+{y:"Zaç Yağı",f:"H₂SO₄",s:"Sülfürik Asit"},
+{y:"Çamaşır Suyu",f:"NaClO",s:"Sodyum Hipoklorit"},
+{y:"Yemek Sodası",f:"NaHCO₃",s:"Sodyum Bikarbonat"},
+{y:"Tuz Ruhu",f:"HCl",s:"Hidroklorik Asit"},
+{y:"Sirke Asidi",f:"CH₃COOH",s:"Asetik Asit"},
+{y:"Karınca Asidi",f:"HCOOH",s:"Formik Asit"},
+{y:"Kireç Taşı",f:"CaCO₃",s:"Kalsiyum Karbonat"},
+{y:"Sönmüş Kireç",f:"Ca(OH)₂",s:"Kalsiyum Hidroksit"},
+{y:"Amonyak",f:"NH₃",s:"Amonyak"},
+{y:"Sofra Tuzu",f:"NaCl",s:"Sodyum Klorür"},
+{y:"Su",f:"H₂O",s:"Su"}
+];
+
+function render(list){
+document.getElementById("body").innerHTML =
+list.map(i=>`
+<tr>
+<td>${i.y}</td>
+<td class="mass">${i.f}</td>
+<td>${i.s}</td>
+</tr>
+`).join("");
+}
+
+function filterChem(){
+const q=document.getElementById("search").value.toLowerCase();
+
+render(data.filter(i=>
+i.y.toLowerCase().includes(q)||
+i.f.toLowerCase().includes(q)||
+i.s.toLowerCase().includes(q)
+));
+}
+
+document.getElementById("theme").onclick=()=>{
+document.body.classList.toggle("light");
+};
+
+render(data);
+
+</script>
+
+</body>
+</html>
