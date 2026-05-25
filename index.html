@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Chemly - Kimya Sözlüğü</title>
+
+<style>
+:root{
+--bg:#0b1120;
+--card:#111827;
+--accent:#38bdf8;
+--text:#e2e8f0;
+--muted:#94a3b8;
+--border:#1e293b;
+}
+
+body.light{
+--bg:#0f172a;
+--card:#1e293b;
+--text:#f8fafc;
+--muted:#cbd5e1;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,sans-serif;
+}
+
+body{
+background:var(--bg);
+color:var(--text);
+transition:.35s;
+padding:40px;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+}
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+}
+
+h1{
+color:var(--accent);
+font-size:34px;
+}
+
+.theme-btn{
+background:#334155;
+border:none;
+padding:12px;
+border-radius:50%;
+cursor:pointer;
+font-size:18px;
+}
+
+.moon{display:none;}
+body.light .moon{display:inline;}
+body.light .sun{display:none;}
+body.light .theme-btn{background:#fbbf24;}
+
+.search{
+width:100%;
+padding:14px;
+border:none;
+border-radius:12px;
+background:var(--card);
+color:var(--text);
+font-size:16px;
+margin-bottom:20px;
+outline:none;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:var(--card);
+border-radius:18px;
+overflow:hidden;
+}
+
+th,td{
+padding:16px;
+border-bottom:1px solid var(--border);
+text-align:left;
+}
+
+th{
+color:var(--accent);
+font-size:14px;
+}
+
+tr:hover{
+background:rgba(56,189,248,.05);
+}
+
+.sym{
+font-weight:bold;
+font-size:18px;
+}
+
+.mass{
+color:#fbbf24;
+font-weight:bold;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+<h1>Chemly Kimya Sözlüğü</h1>
+
+<button id="theme-toggle" class="theme-btn">
+<span class="sun">☀️</span>
+<span class="moon">🌙</span>
+</button>
+</header>
+
+<input
+type="text"
+id="search-chem"
+class="search"
+placeholder="Madde ara..."
+onkeyup="filterChem()"
+/>
+
+<table>
+<thead>
+<tr>
+<th>Yaygın Ad</th>
+<th>Formül</th>
+<th>Sistematik Ad</th>
+</tr>
+</thead>
+
+<tbody id="chem-body"></tbody>
+
+</table>
+
+</div>
+
+<script>
+
+const chemData = [
+
+{yaygin:"Kezzap",formül:"HNO₃",sistem:"Nitrik Asit"},
+{yaygin:"Zaç Yağı",formül:"H₂SO₄",sistem:"Sülfürik Asit"},
+{yaygin:"Çamaşır Suyu",formül:"NaClO",sistem:"Sodyum Hipoklorit"},
+{yaygin:"Çamaşır Sodası",formül:"Na₂CO₃",sistem:"Sodyum Karbonat"},
+{yaygin:"Yemek Sodası",formül:"NaHCO₃",sistem:"Sodyum Bikarbonat"},
+{yaygin:"Tuz Ruhu",formül:"HCl",sistem:"Hidroklorik Asit"},
+{yaygin:"Sirke Asidi",formül:"CH₃COOH",sistem:"Asetik Asit"},
+{yaygin:"Karınca Asidi",formül:"HCOOH",sistem:"Formik Asit"},
+{yaygin:"Kabartma Tozu",formül:"NaHCO₃",sistem:"Sodyum Bikarbonat"},
+{yaygin:"Kireç Taşı",formül:"CaCO₃",sistem:"Kalsiyum Karbonat"},
+{yaygin:"Sönmemiş Kireç",formül:"CaO",sistem:"Kalsiyum Oksit"},
+{yaygin:"Sönmüş Kireç",formül:"Ca(OH)₂",sistem:"Kalsiyum Hidroksit"},
+{yaygin:"Amonyak",formül:"NH₃",sistem:"Amonyak"},
+{yaygin:"Nişadır",formül:"NH₄Cl",sistem:"Amonyum Klorür"},
+{yaygin:"Sodyum Hidroksit",formül:"NaOH",sistem:"Sud Kostik"},
+{yaygin:"Sofra Tuzu",formül:"NaCl",sistem:"Sodyum Klorür"},
+{yaygin:"Su",formül:"H₂O",sistem:"Su"}
+
+];
+
+function renderChem(data){
+document.getElementById("chem-body").innerHTML =
+data.map(item=>`
+<tr>
+<td class="sym">${item.yaygin}</td>
+<td class="mass">${item.formül}</td>
+<td>${item.sistem}</td>
+</tr>
+`).join("");
+}
+
+function filterChem(){
+const q=document.getElementById("search-chem").value.toLowerCase();
+
+renderChem(
+chemData.filter(i=>
+i.yaygin.toLowerCase().includes(q)||
+i.formül.toLowerCase().includes(q)||
+i.sistem.toLowerCase().includes(q)
+)
+);
+}
+
+document.getElementById("theme-toggle").onclick=()=>{
+document.body.classList.toggle("light");
+};
+
+renderChem(chemData);
+
+</script>
+
+</body>
+</html>
