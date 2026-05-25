@@ -21,7 +21,11 @@
 
 <div class="container">
     <a href="sozluk.html" class="nav-link">← Yaygın Adlar Sözlüğü'ne Git</a>
-    <h1>Kimya Bilgi Merkezi</h1>
+   <nav style="background: #1e293b; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+    <a href="index.html" style="color: #38bdf8; text-decoration: none; margin-right: 20px;">🏠 Ana Sayfa</a>
+    <a href="sozluk.html" style="color: #38bdf8; text-decoration: none;">📖 Sözlük</a>
+</nav> 
+<h1>Kimya Bilgi Merkezi</h1>
 
     <div class="card">
         <h2>Madde Sınıflandırma Notları</h2>
