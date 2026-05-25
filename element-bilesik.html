@@ -303,6 +303,90 @@
 
   .section { scroll-margin-top: 60px; }
 
+  /* QUIZ STYLES */
+  .q {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    padding: 16px 18px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+  .q-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #c9d4e0;
+  }
+  .options label {
+    display: block;
+    margin: 6px 0;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text);
+    padding-left: 4px;
+  }
+  .options input { margin-right: 8px; accent-color: #a78bfa; }
+  .check-btn {
+    margin-top: 12px;
+    padding: 7px 18px;
+    border-radius: 8px;
+    border: 1px solid #a78bfa;
+    background: rgba(167,139,250,0.1);
+    color: #a78bfa;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .check-btn:hover { background: rgba(167,139,250,0.2); }
+  .q-result { margin-top: 10px; font-size: 13px; }
+
+  .tf-btns { display: flex; gap: 10px; margin-top: 4px; }
+  .tf-btn {
+    padding: 7px 18px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04);
+    color: var(--text);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s, opacity 0.25s ease;
+  }
+  .tf-btn:hover:not(:disabled) { border-color: #a78bfa; color: #a78bfa; }
+  .tf-btn:disabled { cursor: default; }
+
+  /* Geri bildirim durum sınıfları */
+  .tf-btn.correct-ans {
+    background: rgba(34, 197, 94, 0.15) !important;
+    border-color: #22c55e !important;
+    color: #22c55e !important;
+    opacity: 1 !important;
+  }
+
+  .tf-btn.wrong-ans {
+    background: rgba(239, 68, 68, 0.1) !important;
+    border-color: #ef4444 !important;
+    color: #ef4444 !important;
+    opacity: 0.25 !important;
+  }
+
+  .tf-btn.faded {
+    opacity: 0.25 !important;
+  }
+
+  .quiz-sep {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 20px 0 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
   @media (max-width: 560px) {
     .section { padding: 22px 20px; }
     .compare-grid { grid-template-columns: 1fr; }
@@ -336,7 +420,6 @@
     <p class="subtitle">Temel kavramlar ve karşılaştırmalı özet</p>
   </header>
 
-  <!-- MOLEKÜL -->
   <div class="section mol" id="molekul">
     <p class="section-label">01 — Tanım</p>
     <h2>Molekül</h2>
@@ -352,7 +435,6 @@
     </div>
   </div>
 
-  <!-- ELEMENT -->
   <div class="section elem" id="element">
     <p class="section-label">02 — Tanım</p>
     <h2>Element</h2>
@@ -366,7 +448,6 @@
     </ul>
   </div>
 
-  <!-- BİLEŞİK -->
   <div class="section bil" id="bilesik">
     <p class="section-label">03 — Tanım</p>
     <h2>Bileşik</h2>
@@ -378,7 +459,6 @@
     </ul>
   </div>
 
-  <!-- EK NOT -->
   <div class="section note" id="not">
     <p class="section-label">04 — Not</p>
     <h2>Not</h2>
@@ -391,7 +471,6 @@
     </ul>
   </div>
 
-  <!-- ÖRNEK KARŞILAŞTIRMA -->
   <div class="section compare" id="ornek">
     <p class="section-label">05 — Karşılaştırma</p>
     <h2>Örnek Karşılaştırma</h2>
@@ -415,78 +494,10 @@
     </p>
   </div>
 
-  <!-- QUIZ -->
   <div class="section note" id="quiz" style="--note:#a78bfa;">
     <p class="section-label">06 — Alıştırma</p>
     <h2 style="color:#a78bfa;">Quiz</h2>
 
-    <style>
-      .q {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid var(--border);
-        padding: 16px 18px;
-        border-radius: 12px;
-        margin-bottom: 12px;
-      }
-      .q-title {
-        font-family: 'Space Mono', monospace;
-        font-size: 14px;
-        font-weight: 700;
-        margin-bottom: 12px;
-        color: #c9d4e0;
-      }
-      .options label {
-        display: block;
-        margin: 6px 0;
-        cursor: pointer;
-        font-size: 14px;
-        color: var(--text);
-        padding-left: 4px;
-      }
-      .options input { margin-right: 8px; accent-color: #a78bfa; }
-      .check-btn {
-        margin-top: 12px;
-        padding: 7px 18px;
-        border-radius: 8px;
-        border: 1px solid #a78bfa;
-        background: rgba(167,139,250,0.1);
-        color: #a78bfa;
-        font-family: 'Space Mono', monospace;
-        font-size: 11px;
-        letter-spacing: 1px;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-      .check-btn:hover { background: rgba(167,139,250,0.2); }
-      .q-result { margin-top: 10px; font-size: 13px; }
-
-      .tf-btns { display: flex; gap: 10px; margin-top: 4px; }
-      .tf-btn {
-        padding: 7px 18px;
-        border-radius: 8px;
-        border: 1px solid var(--border);
-        background: rgba(255,255,255,0.04);
-        color: var(--text);
-        font-size: 13px;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-      .tf-btn:hover { border-color: #a78bfa; color: #a78bfa; }
-      .tf-btn:disabled { opacity: 0.5; cursor: default; }
-
-      .quiz-sep {
-        font-family: 'Space Mono', monospace;
-        font-size: 10px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin: 20px 0 12px;
-        padding-top: 16px;
-        border-top: 1px solid var(--border);
-      }
-    </style>
-
-    <!-- ÇOKLU SEÇİM -->
     <p class="quiz-sep">① Çoklu Seçim — birden fazla seçenek doğru olabilir</p>
 
     <div class="q" id="q-n2">
@@ -544,7 +555,6 @@
       <div class="q-result" id="r-nacl"></div>
     </div>
 
-    <!-- DOĞRU / YANLIŞ -->
     <p class="quiz-sep">② Doğru / Yanlış</p>
 
     <div class="q">
@@ -617,22 +627,41 @@ function checkMulti(qId, correct) {
 function checkTF(btn, isCorrectAnswer, id, explanation) {
   const res = document.getElementById(id);
   const btns = btn.parentElement.querySelectorAll('button');
+  
+  // Önce butonları devre dışı bırakıyoruz
   btns.forEach(b => b.disabled = true);
 
-  // isCorrectAnswer: doğru cevabın ne olduğu (true=Doğru, false=Yanlış)
-  // btn.textContent: kullanıcının seçtiği
   const userChoseTrue = btn.textContent.trim() === 'Doğru';
   const userCorrect = userChoseTrue === isCorrectAnswer;
 
   if (userCorrect) {
-    res.innerHTML = '✅ Doğru! ' + explanation;
+    // Kullanıcı doğru cevapladıysa: Doğru şık yeşil parlar, yanlış olan sönükleşir (opacity: 0.25)
+    btns.forEach(b => {
+      const bChoseTrue = b.textContent.trim() === 'Doğru';
+      if (bChoseTrue === isCorrectAnswer) {
+        b.classList.add('correct-ans');
+      } else {
+        b.classList.add('faded');
+      }
+    });
+    res.innerHTML = '✅ ' + explanation;
     res.style.color = '#22c55e';
   } else {
-    res.innerHTML = '❌ Yanlış. ' + explanation;
+    // Kullanıcı yanlış cevapladıysa: Seçtiği buton sönük kırmızı olur, sistemin doğrusu net yeşil yanar
+    btns.forEach(b => {
+      const bChoseTrue = b.textContent.trim() === 'Doğru';
+      if (bChoseTrue === isCorrectAnswer) {
+        b.classList.add('correct-ans');
+      } else {
+        b.classList.add('wrong-ans');
+      }
+    });
+    res.innerHTML = '❌ ' + explanation;
     res.style.color = '#ef4444';
   }
 }
 </script>
 </body>
 </html>
+
 
