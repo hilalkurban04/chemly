@@ -1,0 +1,142 @@
+ <!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemly - Kimya Bilgi Merkezi</title>
+
+<style>
+:root{
+--bg:#0b1120;
+--card:#111827;
+--accent:#38bdf8;
+--text:#e2e8f0;
+}
+
+body{
+background:var(--bg);
+color:var(--text);
+font-family:sans-serif;
+padding:20px;
+line-height:1.6;
+}
+
+.container{
+max-width:800px;
+margin:auto;
+}
+
+nav{
+background:#1e293b;
+padding:15px;
+border-radius:10px;
+margin-bottom:20px;
+display:flex;
+gap:20px;
+}
+
+nav a{
+color:#38bdf8;
+text-decoration:none;
+font-weight:bold;
+}
+
+h1{
+color:var(--accent);
+}
+
+.card{
+background:var(--card);
+padding:25px;
+border-radius:15px;
+margin-bottom:20px;
+border:1px solid #1e293b;
+}
+
+.quiz-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+button{
+padding:12px;
+border:none;
+border-radius:8px;
+background:#334155;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+background:var(--accent);
+color:black;
+}
+
+#quiz-result{
+margin-top:20px;
+font-weight:bold;
+color:var(--accent);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- NAV -->
+<nav>
+<a href="index.html">🏠 Ana Sayfa</a>
+<a href="yaygin-bilesikler.html">🧪 Yaygın Bileşikler</a>
+</nav>
+
+<h1>Chemly Kimya Bilgi Merkezi</h1>
+
+<!-- NOTLAR -->
+<div class="card">
+<h2>Madde Sınıflandırma Notları</h2>
+
+<p><b>Molekül:</b> Atomların kimyasal bağlarla birleşmesidir.</p>
+
+<p><b>Element Molekülü:</b> Aynı tür atomlar (H₂, O₂, P₄)</p>
+
+<p><b>Bileşik Molekülü:</b> Farklı atomlar (H₂O, CO₂, HNO₃)</p>
+
+<hr style="border:0;border-top:1px solid #334155;margin:15px 0;">
+
+<p><b>Önemli:</b></p>
+<p>• Soygazlar molekül oluşturmaz</p>
+<p>• Metaller kristal yapıdadır</p>
+<p>• Moleküller kovalent bağ içerir</p>
+</div>
+
+<!-- QUIZ -->
+<div class="card">
+<h2>Tuzaklı Soru Testi</h2>
+
+<div class="quiz-grid">
+
+<button onclick="checkType('HNO₃','Bileşik Molekülü')">HNO₃</button>
+<button onclick="checkType('P₄','Element Molekülü')">P₄</button>
+<button onclick="checkType('NaCl','İyonik Bileşik')">NaCl</button>
+<button onclick="checkType('He₂','Yanlış: Soygaz molekül yapmaz')">He₂</button>
+<button onclick="checkType('Cl₂','Element Molekülü')">Cl₂</button>
+<button onclick="checkType('H₂O','Bileşik Molekülü')">H₂O</button>
+
+</div>
+
+<div id="quiz-result"></div>
+</div>
+
+</div>
+
+<script>
+function checkType(m, t){
+document.getElementById("quiz-result").innerText =
+m + " → " + t;
+}
+</script>
+
+</body>
+</html>
