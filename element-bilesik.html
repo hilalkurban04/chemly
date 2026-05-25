@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chemly - Element & Molekül Notları</title>
+<title>Element - Bileşik - Molekül</title>
 
 <style>
 body{
@@ -12,7 +12,7 @@ font-family:sans-serif;
 background:#0b1120;
 color:white;
 padding:20px;
-line-height:1.6;
+line-height:1.7;
 }
 
 .container{
@@ -29,43 +29,34 @@ margin-bottom:30px;
 .card{
 background:#111827;
 border:1px solid #1e293b;
-padding:20px;
-border-radius:14px;
-margin-bottom:20px;
+padding:18px;
+border-radius:12px;
+margin-bottom:15px;
 }
 
 h2{
 color:#38bdf8;
 margin-bottom:10px;
+font-size:20px;
 }
 
-.warning{
-background:#3b1d1d;
-border-left:5px solid #ef4444;
-padding:15px;
-border-radius:10px;
-margin-top:10px;
+h3{
+color:#fbbf24;
+margin-top:15px;
 }
 
-.info{
-background:#1e293b;
-border-left:5px solid #38bdf8;
-padding:15px;
-border-radius:10px;
-margin-top:10px;
+p, li{
+margin:6px 0;
 }
 
-.note{
-background:#1f2f1f;
-border-left:5px solid #22c55e;
-padding:15px;
-border-radius:10px;
-margin-top:10px;
+.row-title{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
 }
 
-a{
-color:#38bdf8;
-text-decoration:none;
+.small{
+color:#94a3b8;
 }
 </style>
 </head>
@@ -74,85 +65,75 @@ text-decoration:none;
 
 <div class="container">
 
-<a href="index.html">← Ana Sayfa</a>
-
 <h1>Element - Molekül - Bileşik Notları</h1>
 
+<!-- MOLEKÜL -->
 <div class="card">
-<h2>📘 Madde Sınıflandırma Notları</h2>
-<p>Madde; element, bileşik ve karışım olarak sınıflandırılır. Bu sayfada element ve bileşiklerin temel farkları anlatılmaktadır.</p>
+<h2>Molekül</h2>
+
+<p>Atomların kimyasal bağlarla birleşmesiyle oluşur.</p>
+
+<ul>
+<li>Aynı veya farklı atomlar kimyasal bağlarla bir araya gelerek molekülleri oluşturur</li>
+<li>Aynı atomlar bir araya gelerek element molekülü oluşturur (H₂, O₂, P₄)</li>
+<li>Farklı atomlar bir araya gelerek bileşik molekülleri oluşturur (H₂O, CO₂, HNO₃)</li>
+</ul>
+
+<h3>Önemli Uyarılar</h3>
+<ul>
+<li>Soygazlar doğada kararlı halde bulunur ve molekül yapısı oluşturmazlar</li>
+<li>Moleküller sadece kovalent bağ ile oluşur</li>
+</ul>
 </div>
 
+<!-- ELEMENT -->
 <div class="card">
-<h2>🧪 Molekül</h2>
-<p>Atomların kimyasal bağlarla birleşmesiyle oluşan yapılardır.</p>
-
-<div class="info">
-✔ Aynı veya farklı atomlar birleşebilir
+<div class="row-title">
+<h2>Element</h2>
+<h2>Bileşik</h2>
+<h2>Molekül</h2>
 </div>
 
-<div class="note">
-✔ Moleküller sadece <b>kovalent bağ</b> içerir
-</div>
+<h3>Element</h3>
+<ul>
+<li>Aynı tür atomların bir araya gelmesiyle oluşur</li>
+<li>Fiziksel veya kimyasal yöntemlerle parçalanamaz</li>
+<li>Kendinden daha küçük maddelere ayrılamaz</li>
+<li>Tüm dünyada geçerli ortak sembollerle gösterilir</li>
+<li>Belirli erime, kaynama noktası ve yoğunlukları vardır</li>
+<li>Özelliklerine göre metal, ametal, yarı metal olarak sınıflanır</li>
+</ul>
+
+<h3>Bileşik</h3>
+<ul>
+<li>Farklı elementlerin belirli oranlarda bir araya gelmesiyle oluşur</li>
+<li>Kimyasal yöntemlerle daha basit maddelere ayrılabilir</li>
+<li>Fiziksel yöntemlerle ayrılamaz</li>
+<li>Elementler bileşik oluştururken kendi özelliklerini kaybeder</li>
+</ul>
+
+<h3>Molekül ile İlgili Ek Not</h3>
+<ul>
+<li>Moleküller sadece kovalent bağ ile oluşur</li>
+<li>Bileşikler hem iyonik hem kovalent olabilir</li>
+<li>İyonik bileşikler molekül değildir</li>
+</ul>
 </div>
 
+<!-- ÖRNEK -->
 <div class="card">
-<h2>⚛️ Element Molekülü</h2>
-<p>Aynı tür atomların bir araya gelmesiyle oluşur.</p>
+<h2>Örnek Karşılaştırma</h2>
+<ul>
+<li>H₂ → element molekülü</li>
+<li>H₂O → bileşik molekülü</li>
+<li>NaCl → iyonik bileşik (molekül değildir)</li>
+</ul>
 
-<div class="info">
-Örnek: H₂, O₂, P₄
-</div>
-</div>
-
-<div class="card">
-<h2>🧬 Bileşik Molekülü</h2>
-<p>Farklı atomların bir araya gelmesiyle oluşur.</p>
-
-<div class="info">
-Örnek: H₂O, CO₂, HNO₃
-</div>
-</div>
-
-<div class="card">
-<h2>⚠️ Önemli Bilgiler</h2>
-
-<div class="warning">
-• Soygazlar doğada kararlı halde bulunur ve molekül oluşturmazlar
-</div>
-
-<div class="warning">
-• Metaller kristal örgü yapısında bulunur
-</div>
-
-<div class="warning">
-• İyonik bileşikler (NaCl gibi) molekül değildir
-</div>
-
-<div class="note">
-• Moleküller kovalent bağlarla oluşur
-</div>
+<p class="small">Önemli: Molekül = kovalent yapı, bileşik = en az 2 farklı element</p>
 </div>
 
 </div>
 
 </body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</html>                    olmuş mu
 
