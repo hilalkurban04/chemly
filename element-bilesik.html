@@ -1,142 +1,150 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chemly - Kimya Bilgi Merkezi</title>
+<title>Element - Bileşik - Molekül</title>
 
 <style>
-:root{
---bg:#0b1120;
---card:#111827;
---accent:#38bdf8;
---text:#e2e8f0;
-}
-
 body{
-background:var(--bg);
-color:var(--text);
+margin:0;
 font-family:sans-serif;
+background:#0b1120;
+color:white;
 padding:20px;
 line-height:1.6;
 }
 
 .container{
-max-width:800px;
+max-width:900px;
 margin:auto;
 }
 
-nav{
-background:#1e293b;
-padding:15px;
-border-radius:10px;
+.card{
+background:#111827;
+border:1px solid #1e293b;
+padding:20px;
+border-radius:14px;
 margin-bottom:20px;
-display:flex;
-gap:20px;
-}
-
-nav a{
-color:#38bdf8;
-text-decoration:none;
-font-weight:bold;
+box-shadow:0 0 10px rgba(0,0,0,0.3);
 }
 
 h1{
-color:var(--accent);
+color:#38bdf8;
+text-align:center;
+margin-bottom:30px;
 }
 
-.card{
-background:var(--card);
-padding:25px;
-border-radius:15px;
-margin-bottom:20px;
-border:1px solid #1e293b;
+h2{
+color:#38bdf8;
+margin-bottom:10px;
 }
 
-.quiz-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
+.warning{
+background:#3b1d1d;
+border-left:5px solid #ef4444;
+padding:15px;
+border-radius:10px;
+margin-top:10px;
 }
 
-button{
-padding:12px;
-border:none;
-border-radius:8px;
-background:#334155;
-color:white;
-cursor:pointer;
+.info{
+background:#1e293b;
+border-left:5px solid #38bdf8;
+padding:15px;
+border-radius:10px;
+margin-top:10px;
 }
 
-button:hover{
-background:var(--accent);
-color:black;
+.success{
+background:#1f2f1f;
+border-left:5px solid #22c55e;
+padding:15px;
+border-radius:10px;
+margin-top:10px;
 }
 
-#quiz-result{
-margin-top:20px;
+.highlight{
+color:#fbbf24;
 font-weight:bold;
-color:var(--accent);
+}
+
+a{
+color:#38bdf8;
+text-decoration:none;
+display:inline-block;
+margin-bottom:15px;
 }
 </style>
+
 </head>
 
 <body>
 
 <div class="container">
 
-<!-- NAV -->
-<nav>
-<a href="index.html">🏠 Ana Sayfa</a>
-<a href="yaygin-bilesikler.html">🧪 Yaygın Bileşikler</a>
-</nav>
+<a href="index.html">← Ana Sayfa</a>
 
-<h1>Chemly Kimya Bilgi Merkezi</h1>
+<h1>Element - Bileşik - Molekül</h1>
 
-<!-- NOTLAR -->
 <div class="card">
-<h2>Madde Sınıflandırma Notları</h2>
+<h2>Molekül Nedir?</h2>
+<p>Aynı veya farklı atomların <b>kovalent bağlarla</b> bir araya gelmesiyle oluşur.</p>
 
-<p><b>Molekül:</b> Atomların kimyasal bağlarla birleşmesidir.</p>
-
-<p><b>Element Molekülü:</b> Aynı tür atomlar (H₂, O₂, P₄)</p>
-
-<p><b>Bileşik Molekülü:</b> Farklı atomlar (H₂O, CO₂, HNO₃)</p>
-
-<hr style="border:0;border-top:1px solid #334155;margin:15px 0;">
-
-<p><b>Önemli:</b></p>
-<p>• Soygazlar molekül oluşturmaz</p>
-<p>• Metaller kristal yapıdadır</p>
-<p>• Moleküller kovalent bağ içerir</p>
+<div class="info">
+✔ Aynı atomlar → element molekülü (H₂, O₂)<br>
+✔ Farklı atomlar → bileşik molekülü (H₂O, CO₂)
+</div>
 </div>
 
-<!-- QUIZ -->
 <div class="card">
-<h2>Tuzaklı Soru Testi</h2>
+<h2>⚠️ Önemli Uyarılar</h2>
 
-<div class="quiz-grid">
-
-<button onclick="checkType('HNO₃','Bileşik Molekülü')">HNO₃</button>
-<button onclick="checkType('P₄','Element Molekülü')">P₄</button>
-<button onclick="checkType('NaCl','İyonik Bileşik')">NaCl</button>
-<button onclick="checkType('He₂','Yanlış: Soygaz molekül yapmaz')">He₂</button>
-<button onclick="checkType('Cl₂','Element Molekülü')">Cl₂</button>
-<button onclick="checkType('H₂O','Bileşik Molekülü')">H₂O</button>
-
+<div class="warning">
+⚠️ Soygazlar doğada kararlı halde bulunur ve <b>molekül oluşturmaz</b>. Tek atomlu halde bulunurlar (He, Ne, Ar).
 </div>
 
-<div id="quiz-result"></div>
+<div class="warning">
+⚠️ İyonik bileşikler (NaCl gibi) <b>molekül değildir</b>.
+</div>
+
+<div class="info">
+✔ Moleküller sadece <b>kovalent bağ</b> ile oluşur<br>
+✔ Bileşikler hem iyonik hem kovalent olabilir
+</div>
+</div>
+
+<div class="card">
+<h2>Element Nedir?</h2>
+<p>Tek tür atom içeren saf maddelerdir.</p>
+
+<div class="success">
+✔ Kimyasal yollarla daha basit maddelere ayrılamaz<br>
+✔ Metal, ametal ve yarı metal olarak sınıflanır<br>
+✔ Evrensel sembollerle gösterilir
+</div>
+</div>
+
+<div class="card">
+<h2>Bileşik Nedir?</h2>
+<p>En az 2 farklı elementin belirli oranlarda birleşmesiyle oluşur.</p>
+
+<div class="info">
+✔ Kimyasal yollarla ayrıştırılabilir<br>
+✔ Fiziksel yollarla ayrılamaz<br>
+✔ Sabit oranlara sahiptir
+</div>
 </div>
 
 </div>
-
-<script>
-function checkType(m, t){
-document.getElementById("quiz-result").innerText =
-m + " → " + t;
-}
-</script>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
