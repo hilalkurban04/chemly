@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemly - Kimya Asistanı</title>
+    <style>
+        :root { --bg: #0b1120; --card: #111827; --accent: #38bdf8; --text: #e2e8f0; }
+        body { background: var(--bg); color: var(--text); font-family: sans-serif; padding: 20px; }
+        .container { max-width: 900px; margin: auto; }
+        .panel { display: none; }
+        .panel.active { display: block; }
+        .tab { background: #334155; border: none; padding: 10px 20px; color: white; cursor: pointer; }
+        .tab.active { background: var(--accent); }
+        .card { background: var(--card); padding: 20px; border-radius: 12px; margin-top: 20px; }
+        .search { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: none; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; border-bottom: 1px solid #1e293b; text-align: left; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Chemly Kimya Asistanı</h1>
+    <button class="tab active" onclick="switchTab('sozluk', this)">Sözlük</button>
+    <button class="tab" onclick="switchTab('sinif', this)">Madde Sınıflandırma</button>
+    <button class="tab" onclick="switchTab('quiz', this)">Tuzaklı Sorular</button>
+
+    <div class="panel active" id="panel-sozluk">
+        <div class="card">
+            <input type="text" id="search-chem" class="search" onkeyup="filterChem()" placeholder="Madde ara...">
+            <table id="chem-table">
+                <thead><tr><th>Yaygın Ad</th><th>Formül</th><th>Sistem</th></tr></thead>
+                <tbody id="chem-body"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel" id="panel-sinif">
+        <div class="card">
+            <h2>Madde Sınıflandırma</h2>
+            <p><b>Element:</b> Aynı tür atomlar. <b>Bileşik:</b> Farklı tür atomlar (saf madde).</p>
+            <p><b>Not:</b> Soygazlar molekül yapmaz, metaller kristal örgüdür.</p>
+        </div>
+    </div>
+
+    <div class="panel" id="panel-quiz">
+        <div class="card">
+            <h2>Tuzaklı Soru Testi</h2>
+            <div id="quiz-grid">
+                <button onclick="checkType('HNO₃', 'Bileşik Molekülü')">HNO₃</button>
+                <button onclick="checkType('P₄', 'Element Molekülü')">P₄</button>
+                <button onclick="checkType('NaCl', 'İyonik Bileşik')">NaCl</button>
+                <button onclick="checkType('He₂', 'Tuzak! Soygazlar molekül yapmaz!')">He₂</button>
+                <button onclick="checkType('Cl₂', 'Element Molekülü')">Cl₂</button>
+            </div>
+            <div id="quiz-result" style="margin-top:15px; font-weight:bold;"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function switchTab(id, btn) {
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('panel-' + id).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    const chemData = [
+        {yaygin:"Kezzap",formül:"HNO₃",sistem:"Nitrik Asit"},
+        {yaygin:"Zaç Yağı",formül:"H₂SO₄",sistem:"Sülfürik Asit"},
+        {yaygin:"Tuz Ruhu",formül:"HCl",sistem:"Hidroklorik Asit"},
+        {yaygin:"Sofra Tuzu",formül:"NaCl",sistem:"Sodyum Klorür"},
+        {yaygin:"Su",formül:"H₂O",sistem:"Su"}
+    ];
+
+    function renderChem(data) {
+        document.getElementById("chem-body").innerHTML = data.map(item => `<tr><td>${item.yaygin}</td><td>${item.formül}</td><td>${item.sistem}</td></tr>`).join("");
+    }
+
+    function filterChem() {
+        const q = document.getElementById("search-chem").value.toLowerCase();
+        renderChem(chemData.filter(i => i.yaygin.toLowerCase().includes(q) || i.formül.toLowerCase().includes(q)));
+    }
+
+    function checkType(m, t) { document.getElementById('quiz-result').innerText = m + " -> " + t; }
+
+    renderChem(chemData);
+</script>
+</body>
+</html>
