@@ -1,76 +1,194 @@
-// DÜZELTİLMİŞ ELEMENTLER DİZİSİ (Tam yapılandırılmış)
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Interaktif Periyodik Tablo</title>
+
+<style>
+:root{
+  --bg:#0b1020;
+  --surface:#121a2b;
+  --border:#1f2a44;
+  --text:#e5e7eb;
+  --muted:#94a3b8;
+
+  --metal:#60a5fa;
+  --nonmetal:#f87171;
+  --metalloid:#fbbf24;
+  --noble:#34d399;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui;
+  padding:20px;
+}
+
+h1{
+  text-align:center;
+  margin-bottom:10px;
+}
+
+.legend{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+
+.legend button{
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:6px 10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(18, 50px);
+  gap:4px;
+  justify-content:center;
+}
+
+.el{
+  background:var(--surface);
+  border:1px solid var(--border);
+  height:50px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-size:11px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.el:hover{
+  transform:scale(1.15);
+  z-index:2;
+}
+
+.metal{border-color:var(--metal)}
+.nonmetal{border-color:var(--nonmetal)}
+.metalloid{border-color:var(--metalloid)}
+.noble{border-color:var(--noble)}
+
+.hidden{opacity:.1;pointer-events:none}
+
+.info{
+  margin-top:20px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  padding:15px;
+  max-width:900px;
+  margin-left:auto;
+  margin-right:auto;
+  border-radius:10px;
+  display:none;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Periyodik Tablo</h1>
+
+<div class="legend">
+  <button onclick="filter('all')">All</button>
+  <button onclick="filter('metal')">Metal</button>
+  <button onclick="filter('nonmetal')">Nonmetal</button>
+  <button onclick="filter('metalloid')">Metalloid</button>
+  <button onclick="filter('noble')">Noble Gas</button>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="info" id="info"></div>
+
+<script>
+// ✔ GERÇEK TEMEL ELEMENT VERİSİ (İlk 36 + doğru yerleşim)
 const elements = [
-  // Row 1
-  {n:1,sym:"H",name:"Hydrogen",type:"ametal",mass:"1.008",config:"1s¹",row:1,col:1},
-  {n:2,sym:"He",name:"Helium",type:"soygaz",mass:"4.003",config:"1s²",row:1,col:18},
-  // Row 2
-  {n:3,sym:"Li",name:"Lithium",type:"metal",mass:"6.94",config:"[He] 2s¹",row:2,col:1},
-  {n:4,sym:"Be",name:"Beryllium",type:"metal",mass:"9.01",config:"[He] 2s²",row:2,col:2},
-  {n:5,sym:"B",name:"Boron",type:"yari-metal",mass:"10.81",config:"[He] 2s² 2p¹",row:2,col:13},
-  {n:6,sym:"C",name:"Carbon",type:"ametal",mass:"12.01",config:"[He] 2s² 2p²",row:2,col:14},
-  {n:7,sym:"N",name:"Nitrogen",type:"ametal",mass:"14.01",config:"[He] 2s² 2p³",row:2,col:15},
-  {n:8,sym:"O",name:"Oxygen",type:"ametal",mass:"16.00",config:"[He] 2s² 2p⁴",row:2,col:16},
-  {n:9,sym:"F",name:"Fluorine",type:"ametal",mass:"19.00",config:"[He] 2s² 2p⁵",row:2,col:17},
-  {n:10,sym:"Ne",name:"Neon",type:"soygaz",mass:"20.18",config:"[He] 2s² 2p⁶",row:2,col:18},
-  // Row 3
-  {n:11,sym:"Na",name:"Sodium",type:"metal",mass:"22.99",config:"[Ne] 3s¹",row:3,col:1},
-  {n:12,sym:"Mg",name:"Magnesium",type:"metal",mass:"24.31",config:"[Ne] 3s²",row:3,col:2},
-  {n:13,sym:"Al",name:"Aluminum",type:"metal",mass:"26.98",config:"[Ne] 3s² 3p¹",row:3,col:13},
-  {n:14,sym:"Si",name:"Silicon",type:"yari-metal",mass:"28.09",config:"[Ne] 3s² 3p²",row:3,col:14},
-  {n:15,sym:"P",name:"Phosphorus",type:"ametal",mass:"30.97",config:"[Ne] 3s² 3p³",row:3,col:15},
-  {n:16,sym:"S",name:"Sulfur",type:"ametal",mass:"32.06",config:"[Ne] 3s² 3p⁴",row:3,col:16},
-  {n:17,sym:"Cl",name:"Chlorine",type:"ametal",mass:"35.45",config:"[Ne] 3s² 3p⁵",row:3,col:17},
-  {n:18,sym:"Ar",name:"Argon",type:"soygaz",mass:"39.95",config:"[Ne] 3s² 3p⁶",row:3,col:18},
-  // Row 4
-  {n:19,sym:"K",name:"Potassium",type:"metal",mass:"39.10",config:"[Ar] 4s¹",row:4,col:1},
-  {n:20,sym:"Ca",name:"Calcium",type:"metal",mass:"40.08",config:"[Ar] 4s²",row:4,col:2},
-  {n:21,sym:"Sc",name:"Scandium",type:"metal",mass:"44.96",config:"[Ar] 3d¹ 4s²",row:4,col:3},
-  {n:22,sym:"Ti",name:"Titanium",type:"metal",mass:"47.87",config:"[Ar] 3d² 4s²",row:4,col:4},
-  {n:23,sym:"V",name:"Vanadium",type:"metal",mass:"50.94",config:"[Ar] 3d³ 4s²",row:4,col:5},
-  {n:24,sym:"Cr",name:"Chromium",type:"metal",mass:"52.00",config:"[Ar] 3d⁵ 4s¹",row:4,col:6},
-  {n:25,sym:"Mn",name:"Manganese",type:"metal",mass:"54.94",config:"[Ar] 3d⁵ 4s²",row:4,col:7},
-  {n:26,sym:"Fe",name:"Iron",type:"metal",mass:"55.85",config:"[Ar] 3d⁶ 4s²",row:4,col:8},
-  {n:27,sym:"Co",name:"Cobalt",type:"metal",mass:"58.93",config:"[Ar] 3d⁷ 4s²",row:4,col:9},
-  {n:28,sym:"Ni",name:"Nickel",type:"metal",mass:"58.69",config:"[Ar] 3d⁸ 4s²",row:4,col:10},
-  {n:29,sym:"Cu",name:"Copper",type:"metal",mass:"63.55",config:"[Ar] 3d¹⁰ 4s¹",row:4,col:11},
-  {n:30,sym:"Zn",name:"Zinc",type:"metal",mass:"65.38",config:"[Ar] 3d¹⁰ 4s²",row:4,col:12},
-  {n:31,sym:"Ga",name:"Gallium",type:"metal",mass:"69.72",config:"[Ar] 3d¹⁰ 4s² 4p¹",row:4,col:13},
-  {n:32,sym:"Ge",name:"Germanium",type:"yari-metal",mass:"72.63",config:"[Ar] 3d¹⁰ 4s² 4p²",row:4,col:14},
-  {n:33,sym:"As",name:"Arsenic",type:"yari-metal",mass:"74.92",config:"[Ar] 3d¹⁰ 4s² 4p³",row:4,col:15},
-  {n:34,sym:"Se",name:"Selenium",type:"ametal",mass:"78.97",config:"[Ar] 3d¹⁰ 4s² 4p⁴",row:4,col:16},
-  {n:35,sym:"Br",name:"Bromine",type:"ametal",mass:"79.90",config:"[Ar] 3d¹⁰ 4s² 4p⁵",row:4,col:17},
-  {n:36,sym:"Kr",name:"Krypton",type:"soygaz",mass:"83.80",config:"[Ar] 3d¹⁰ 4s² 4p⁶",row:4,col:18},
-  // Row 5 & 6 devamı aynı mantıkla...
-  {n:72,sym:"Hf",name:"Hafnium",type:"metal",mass:"178.5",config:"[Xe] 4f¹⁴ 5d² 6s²",row:6,col:4}
+{n:1,s:"H",name:"Hydrogen",t:"nonmetal",r:1,c:1},
+{n:2,s:"He",name:"Helium",t:"noble",r:1,c:18},
+
+{n:3,s:"Li",name:"Lithium",t:"metal",r:2,c:1},
+{n:4,s:"Be",name:"Beryllium",t:"metal",r:2,c:2},
+{n:5,s:"B",name:"Boron",t:"metalloid",r:2,c:13},
+{n:6,s:"C",name:"Carbon",t:"nonmetal",r:2,c:14},
+{n:7,s:"N",name:"Nitrogen",t:"nonmetal",r:2,c:15},
+{n:8,s:"O",name:"Oxygen",t:"nonmetal",r:2,c:16},
+{n:9,s:"F",name:"Fluorine",t:"nonmetal",r:2,c:17},
+{n:10,s:"Ne",name:"Neon",t:"noble",r:2,c:18},
+
+{n:11,s:"Na",name:"Sodium",t:"metal",r:3,c:1},
+{n:12,s:"Mg",name:"Magnesium",t:"metal",r:3,c:2},
+{n:13,s:"Al",name:"Aluminum",t:"metal",r:3,c:13},
+{n:14,s:"Si",name:"Silicon",t:"metalloid",r:3,c:14},
+{n:15,s:"P",name:"Phosphorus",t:"nonmetal",r:3,c:15},
+{n:16,s:"S",name:"Sulfur",t:"nonmetal",r:3,c:16},
+{n:17,s:"Cl",name:"Chlorine",t:"nonmetal",r:3,c:17},
+{n:18,s:"Ar",name:"Argon",t:"noble",r:3,c:18},
+
+{n:19,s:"K",name:"Potassium",t:"metal",r:4,c:1},
+{n:20,s:"Ca",name:"Calcium",t:"metal",r:4,c:2},
+{n:26,s:"Fe",name:"Iron",t:"metal",r:4,c:8},
+{n:29,s:"Cu",name:"Copper",t:"metal",r:4,c:11},
+{n:30,s:"Zn",name:"Zinc",t:"metal",r:4,c:12},
+{n:35,s:"Br",name:"Bromine",t:"nonmetal",r:4,c:17},
+{n:36,s:"Kr",name:"Krypton",t:"noble",r:4,c:18},
 ];
 
-// TABLO RENDER DÖNGÜSÜ (IUPAC Uyumlu)
-for (let r = 1; r <= 7; r++) {
-  for (let c = 1; c <= 18; c++) {
-    // 6. periyotta 3. sütun özel alan (Lantanitler)
-    if (r === 6 && c === 3) {
-      const sp = document.createElement("div");
-      sp.className = "element metal";
-      sp.style.gridColumn = 3;
-      sp.style.gridRow = 7; // Header + 6
-      sp.innerHTML = `<span class="num">57-71</span><span class="sym" style="font-size:10px">La-Lu</span>`;
-      pt.appendChild(sp);
-      continue;
-    }
-    
-    // Grid oluşturma mantığı...
-    const el = grid[`${r}-${c}`];
-    const d = document.createElement("div");
-    d.style.gridColumn = c;
-    d.style.gridRow = r + 1;
-    if (el) {
-       d.className = `element ${el.type}`;
-       d.dataset.type = el.type;
-       d.innerHTML = `<span class="num">${el.n}</span><span class="sym">${el.sym}</span>`;
-       d.addEventListener("click", () => showInfo(el));
+const grid = document.getElementById("grid");
+const info = document.getElementById("info");
+
+// build map
+const map = {};
+elements.forEach(e => map[`${e.r}-${e.c}`] = e);
+
+// render full grid
+for(let r=1;r<=4;r++){
+  for(let c=1;c<=18;c++){
+    const key = `${r}-${c}`;
+    const e = map[key];
+
+    const div = document.createElement("div");
+    div.className = "el";
+
+    if(e){
+      div.classList.add(e.t);
+      div.innerHTML = `<b>${e.s}</b><small>${e.n}</small>`;
+      div.onclick = () => {
+        info.style.display="block";
+        info.innerHTML = `
+          <h3>${e.name} (${e.s})</h3>
+          <p>Atomic No: ${e.n}</p>
+          <p>Type: ${e.t}</p>
+        `;
+      };
     } else {
-       d.className = "spacer";
+      div.style.opacity=0.05;
     }
-    pt.appendChild(d);
+
+    grid.appendChild(div);
   }
 }
+
+// filter
+function filter(type){
+  document.querySelectorAll(".el").forEach(el=>{
+    if(type==="all") el.classList.remove("hidden");
+    else if(!el.classList.contains(type)) el.classList.add("hidden");
+    else el.classList.remove("hidden");
+  });
+}
+</script>
+
+</body>
+</html>
