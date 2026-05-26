@@ -545,54 +545,7 @@
       <div class="q-result" id="r-nacl"></div>
     </div>
 
-    <!-- DOĞRU / YANLIŞ -->
-    <p class="quiz-sep">② Doğru / Yanlış</p>
-
-    <div class="q">
-      <div class="q-title">H₂ moleküldür.</div>
-      <div class="tf-btns">
-        <button class="tf-btn" onclick="checkTF(this, true, 'tf1', 'H₂ iki hidrojen atomundan oluşan element molekülüdür.')">Doğru</button>
-        <button class="tf-btn" onclick="checkTF(this, false, 'tf1', 'H₂ iki hidrojen atomundan oluşan element molekülüdür.')">Yanlış</button>
-      </div>
-      <div class="q-result" id="tf1"></div>
-    </div>
-
-    <div class="q">
-      <div class="q-title">NaCl moleküldür.</div>
-      <div class="tf-btns">
-        <button class="tf-btn" onclick="checkTF(this, false, 'tf2', 'NaCl iyonik bileşiktir; kristal örgü yapısındadır, moleküler yapıda değildir.')">Doğru</button>
-        <button class="tf-btn" onclick="checkTF(this, true, 'tf2', 'NaCl iyonik bileşiktir; kristal örgü yapısındadır, moleküler yapıda değildir.')">Yanlış</button>
-      </div>
-      <div class="q-result" id="tf2"></div>
-    </div>
-
-    <div class="q">
-      <div class="q-title">Soygazlar molekül oluşturur.</div>
-      <div class="tf-btns">
-        <button class="tf-btn" onclick="checkTF(this, false, 'tf3', 'Soygazlar kararlı yapıdadır; doğada tek atomlu halde bulunur, molekül oluşturmazlar.')">Doğru</button>
-        <button class="tf-btn" onclick="checkTF(this, true, 'tf3', 'Soygazlar kararlı yapıdadır; doğada tek atomlu halde bulunur, molekül oluşturmazlar.')">Yanlış</button>
-      </div>
-      <div class="q-result" id="tf3"></div>
-    </div>
-
-    <div class="q">
-      <div class="q-title">CO₂ bileşiktir.</div>
-      <div class="tf-btns">
-        <button class="tf-btn" onclick="checkTF(this, true, 'tf4', 'CO₂ karbon ve oksijen atomlarından oluşan kovalent bileşik molekülüdür.')">Doğru</button>
-        <button class="tf-btn" onclick="checkTF(this, false, 'tf4', 'CO₂ karbon ve oksijen atomlarından oluşan kovalent bileşik molekülüdür.')">Yanlış</button>
-      </div>
-      <div class="q-result" id="tf4"></div>
-    </div>
-
-    <div class="q">
-      <div class="q-title">Elementler kimyasal yöntemle ayrılır.</div>
-      <div class="tf-btns">
-        <button class="tf-btn" onclick="checkTF(this, false, 'tf5', 'Elementler fiziksel veya kimyasal yöntemlerle ayrılamaz.')">Doğru</button>
-        <button class="tf-btn" onclick="checkTF(this, true, 'tf5', 'Elementler fiziksel veya kimyasal yöntemlerle ayrılamaz.')">Yanlış</button>
-      </div>
-      <div class="q-result" id="tf5"></div>
-    </div>
-
+   
   </div>
 
 </div>
@@ -615,32 +568,36 @@ function checkMulti(qId, correct) {
   }
 }
 
-function checkTF(btn, isCorrectAnswer, id, explanation) {
+
   const res = document.getElementById(id);
   const btns = btn.parentElement.querySelectorAll('button');
-
   btns.forEach(b => b.disabled = true);
 
-  btns.forEach(b => {
-    const bIsTrue = b.textContent.trim() === 'Doğru';
+  const userChoseTrue = btn.textContent.trim() === 'Doğru';
+  const userCorrect = userChoseTrue === isCorrectAnswer;
 
-    if (bIsTrue === isCorrectAnswer) {
-      /* doğru seçenek parlar */
-      b.style.background = 'rgba(0,229,255,0.12)';
-      b.style.borderColor = '#00e5ff';
-      b.style.color = '#00e5ff';
-      b.style.opacity = '1';
+  // doğru butonu parlat, yanlış butonu söndür
+  btns.forEach(b => {
+    const bChoseTrue = b.textContent.trim() === 'Doğru';
+    if (bChoseTrue === isCorrectAnswer) {
+      b.style.background = 'rgba(167,139,250,0.25)';
+      b.style.borderColor = '#a78bfa';
+      b.style.color = '#a78bfa';
     } else {
-      /* yanlış seçenek söner */
       b.style.background = 'transparent';
       b.style.borderColor = '#1a2332';
-      b.style.color = '#334155';
-      b.style.opacity = '0.18';
+      b.style.color = '#2a3a52';
     }
   });
 
-  res.innerHTML = explanation;
-  res.style.color = '#00e5ff';
+  if (userCorrect) {
+    res.innerHTML = '✅ ' + explanation;
+    res.style.color = '#a78bfa';
+  } else {
+    res.innerHTML = '❌ ' + explanation;
+    res.style.color = '#a78bfa';
+  }
 }
+</script>
 </body>
 </html>
