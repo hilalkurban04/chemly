@@ -3,130 +3,76 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Periyodik Tablo (YKS)</title>
+<title>Periyodik Tablo (IUPAC)</title>
 
 <style>
-body{
-  margin:0;
-  background:#0b0f1a;
-  color:white;
-  font-family:Arial;
-}
+  body { margin: 0; background: #0b0f1a; color: white; font-family: 'Segoe UI', sans-serif; }
+  .wrapper { padding: 20px; overflow-x: auto; }
+  
+  /* Izgara: 1 sütun periyot no + 18 sütun grup */
+  .table { 
+    display: grid; 
+    grid-template-columns: 30px repeat(18, 55px); 
+    gap: 4px; 
+    min-width: 1100px;
+    margin-top: 10px;
+  }
 
-.wrapper{
-  padding:20px;
-  overflow-x:auto;
-}
-
-.table{
-  display:grid;
-  grid-template-columns: 50px repeat(18, 60px);
-  gap:4px;
-  min-width:1200px;
-}
-
-/* Hücre */
-.cell{
-  background:#151c2c;
-  border:1px solid #26324a;
-  border-radius:6px;
-  height:60px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  font-size:12px;
-}
-
-.num{
-  font-size:10px;
-  color:#9ca3af;
-}
-
-.sym{
-  font-weight:bold;
-  font-size:14px;
-}
-
-/* boş hücre */
-.empty{
-  background:transparent;
-  border:none;
-}
-
-/* periyot numarası */
-.period{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  color:#60a5fa;
-  font-weight:bold;
-}
-.group{
-  text-align:center;
-  font-size:10px;
-  color:#9ca3af;
-}
+  .cell { 
+    background: #151c2c; border: 1px solid #26324a; border-radius: 4px; 
+    height: 55px; display: flex; flex-direction: column; 
+    justify-content: center; align-items: center; font-size: 11px;
+  }
+  .num { font-size: 9px; color: #6b7280; }
+  .sym { font-weight: bold; font-size: 13px; color: #60a5fa; }
+  .empty { background: transparent; border: none; }
+  .period { display: flex; justify-content: center; align-items: center; color: #4b5563; font-weight: bold; font-size: 12px; }
+  .header-row { display: grid; grid-template-columns: 30px repeat(18, 55px); gap: 4px; margin-left: 30px; }
+  .group { text-align: center; font-size: 9px; color: #9ca3af; margin-bottom: 5px; }
 </style>
 </head>
-
 <body>
 
 <div class="wrapper">
+  <div class="header-row">
+    <div></div>
+    <div class="group">1</div><div class="group">2</div><div></div><div></div><div></div><div></div><div></div><div></div>
+    <div></div><div></div><div class="group">3</div><div class="group">4</div><div class="group">5</div><div class="group">6</div><div class="group">7</div><div class="group">8</div>
+  </div>
 
-<!-- ÜST GRUPLAR -->
-<div class="table">
-
-  <div></div>
-  <div class="group">1A</div><div class="group">2A</div><div class="group">3A</div><div class="group">4A</div><div class="group">5A</div><div class="group">6A</div><div class="group">7A</div><div class="group">8A</div>
-  <div class="group">1B</div><div class="group">2B</div><div class="group">3B</div><div class="group">4B</div><div class="group">5B</div><div class="group">6B</div><div class="group">7B</div><div class="group">8B</div><div></div><div></div>
-
-</div>
-
-<div id="table" class="table"></div>
-
+  <div id="table" class="table"></div>
 </div>
 
 <script>
-
-const el = (n,s) => `<div class="cell"><div class="num">${n}</div><div class="sym">${s}</div></div>`;
 const empty = `<div class="empty"></div>`;
-const period = n => `<div class="period">${n}</div>`;
-
-/* 118 ELEMENT (basitleştirilmiş ama doğru yerleşim mantığı) */
 const data = [
-/* P1 */ [1,"H","","","","","","","","","","","","","","","",2,"He"],
-/* P2 */ [3,"Li",4,"Be",empty(),empty(),empty(),empty(),empty(),empty(),empty(),5,"B",6,"C",7,"N",8,"O",9,"F",10,"Ne"],
-/* P3 */ [11,"Na",12,"Mg",empty(),empty(),empty(),empty(),empty(),empty(),empty(),13,"Al",14,"Si",15,"P",16,"S",17,"Cl",18,"Ar"],
-/* P4 */ [19,"K",20,"Ca",21,"Sc",22,"Ti",23,"V",24,"Cr",25,"Mn",26,"Fe",27,"Co",28,"Ni",29,"Cu",30,"Zn",31,"Ga",32,"Ge",33,"As",34,"Se",35,"Br",36,"Kr"],
-/* P5 */ [37,"Rb",38,"Sr",39,"Y",40,"Zr",41,"Nb",42,"Mo",43,"Tc",44,"Ru",45,"Rh",46,"Pd",47,"Ag",48,"Cd",49,"In",50,"Sn",51,"Sb",52,"Te",53,"I",54,"Xe"],
-/* P6 */ [55,"Cs",56,"Ba","LAN","LAN","LAN","LAN","LAN","LAN","LAN","LAN",72,"Hf",73,"Ta",74,"W",75,"Re",76,"Os",77,"Ir",78,"Pt",79,"Au",80,"Hg",81,"Tl",82,"Pb",83,"Bi",84,"Po",85,"At",86,"Rn"],
-/* P7 */ [87,"Fr",88,"Ra","ACT","ACT","ACT","ACT","ACT","ACT","ACT","ACT",104,"Rf",105,"Db",106,"Sg",107,"Bh",108,"Hs",109,"Mt",110,"Ds",111,"Rg",112,"Cn",113,"Nh",114,"Fl",115,"Mc",116,"Lv",117,"Ts",118,"Og"]
+  // Her satır 18 sütun dolacak şekilde ayarlandı
+  [1,"H",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,"He"],
+  [3,"Li",4,"Be",0,0,0,0,0,0,0,0,0,5,"B",6,"C",7,"N",8,"O",9,"F",10,"Ne"],
+  [11,"Na",12,"Mg",0,0,0,0,0,0,0,0,0,13,"Al",14,"Si",15,"P",16,"S",17,"Cl",18,"Ar"],
+  [19,"K",20,"Ca",21,"Sc",22,"Ti",23,"V",24,"Cr",25,"Mn",26,"Fe",27,"Co",28,"Ni",29,"Cu",30,"Zn",31,"Ga",32,"Ge",33,"As",34,"Se",35,"Br",36,"Kr"],
+  [37,"Rb",38,"Sr",39,"Y",40,"Zr",41,"Nb",42,"Mo",43,"Tc",44,"Ru",45,"Rh",46,"Pd",47,"Ag",48,"Cd",49,"In",50,"Sn",51,"Sb",52,"Te",53,"I",54,"Xe"],
+  [55,"Cs",56,"Ba","*","La-Lu","*","*","*","*","*","*","*","*",72,"Hf",73,"Ta",74,"W",75,"Re",76,"Os",77,"Ir",78,"Pt",79,"Au",80,"Hg",81,"Tl",82,"Pb",83,"Bi",84,"Po",85,"At",86,"Rn"],
+  [87,"Fr",88,"Ra","**","Ac-Lr","**","**","**","**","**","**","**","**",104,"Rf",105,"Db",106,"Sg",107,"Bh",108,"Hs",109,"Mt",110,"Ds",111,"Rg",112,"Cn",113,"Nh",114,"Fl",115,"Mc",116,"Lv",117,"Ts",118,"Og"]
 ];
 
 const table = document.getElementById("table");
 
-for(let i=0;i<data.length;i++){
-  let row = data[i];
+data.forEach((row, i) => {
+  table.innerHTML += `<div class="period">${i + 1}</div>`;
+  for (let c = 0; c < 18; c++) {
+    let val = row[c * 2]; // Sayı
+    let sym = row[c * 2 + 1]; // Sembol
 
-  table.innerHTML += period(i+1);
-
-  for(let c=0;c<18;c++){
-    let v = row[c];
-
-    if(v === "" || v === undefined){
-      table.innerHTML += `<div class="empty"></div>`;
-    }
-    else if(v === "LAN" || v === "ACT"){
-      table.innerHTML += `<div class="cell"><div class="num">${v}</div></div>`;
-    }
-    else{
-      table.innerHTML += el(v, row[c+1]);
-      c++;
+    if (val === 0) {
+      table.innerHTML += empty;
+    } else if (val === "*" || val === "**") {
+      table.innerHTML += `<div class="cell" style="background:#1e293b"><div class="num">${sym}</div></div>`;
+    } else {
+      table.innerHTML += `<div class="cell"><div class="num">${val}</div><div class="sym">${sym}</div></div>`;
     }
   }
-}
-
+});
 </script>
 
 </body>
