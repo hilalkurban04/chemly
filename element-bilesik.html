@@ -553,51 +553,7 @@
 <script>
 const labelMap = { element: 'Element', molekul: 'Molekül', bilesik: 'Bileşik' };
 
-function checkMulti(qId, correct) {
-  const q = document.getElementById(qId);
-  const selected = [...q.querySelectorAll('input:checked')].map(x => x.value);
-  const res = document.getElementById('r-' + qId.replace('q-', ''));
-  const ok = selected.length === correct.length && selected.every(v => correct.includes(v));
-  if (ok) {
-    res.innerHTML = '✅ Doğru!';
-    res.style.color = '#22c55e';
-  } else {
-    const correctLabels = correct.map(v => labelMap[v]).join(', ');
-    res.innerHTML = '❌ Yanlış. Doğru cevap: <strong>' + correctLabels + '</strong>';
-    res.style.color = '#ef4444';
-  }
-}
 
-
-  const res = document.getElementById(id);
-  const btns = btn.parentElement.querySelectorAll('button');
-  btns.forEach(b => b.disabled = true);
-
-  const userChoseTrue = btn.textContent.trim() === 'Doğru';
-  const userCorrect = userChoseTrue === isCorrectAnswer;
-
-  // doğru butonu parlat, yanlış butonu söndür
-  btns.forEach(b => {
-    const bChoseTrue = b.textContent.trim() === 'Doğru';
-    if (bChoseTrue === isCorrectAnswer) {
-      b.style.background = 'rgba(167,139,250,0.25)';
-      b.style.borderColor = '#a78bfa';
-      b.style.color = '#a78bfa';
-    } else {
-      b.style.background = 'transparent';
-      b.style.borderColor = '#1a2332';
-      b.style.color = '#2a3a52';
-    }
-  });
-
-  if (userCorrect) {
-    res.innerHTML = '✅ ' + explanation;
-    res.style.color = '#a78bfa';
-  } else {
-    res.innerHTML = '❌ ' + explanation;
-    res.style.color = '#a78bfa';
-  }
-}
 </script>
 </body>
 </html>
