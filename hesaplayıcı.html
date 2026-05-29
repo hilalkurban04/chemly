@@ -16,6 +16,7 @@
   --accent: #5b8fa8;
   --warn: #d4a853;
   --warn-bg: rgba(212, 168, 83, 0.08);
+  --reverse: #6a9a8b;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
@@ -62,6 +63,28 @@ h1 {
   letter-spacing: -1px;
 }
 .subtitle { font-size: 13px; color: var(--muted); margin-top: 8px; }
+
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 36px 0 20px;
+}
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
 .info-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -109,6 +132,7 @@ h1 {
   line-height: 1.6;
 }
 .info-card ul li strong { color: #e8f0f8; font-weight: 600; }
+
 .warn-card {
   background: var(--warn-bg);
   border: 1px solid rgba(212, 168, 83, 0.45);
@@ -204,6 +228,7 @@ h1 {
   border: 1px solid rgba(212, 168, 83, 0.2);
 }
 .warn-foot strong { color: #fff; }
+
 .fcard {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -223,6 +248,9 @@ h1 {
   background: var(--accent);
   opacity: 0.5;
   border-radius: 3px 0 0 3px;
+}
+.fcard.reverse-card::before {
+  background: var(--reverse);
 }
 .fcard:hover { border-color: #2a3a52; }
 .fcard-title {
@@ -260,8 +288,8 @@ h1 {
 }
 .stp-options { margin-bottom: 10px; }
 .na-btn, .stp-btn {
-  flex: 1;
-  min-width: 100px;
+  flex: 1 1 0;
+  min-width: 0;
   padding: 8px 10px;
   border-radius: 8px;
   border: 1px solid var(--border);
@@ -285,6 +313,7 @@ h1 {
   background: rgba(255,255,255,0.03);
 }
 .na-hint { color: var(--muted); font-size: 9px; }
+
 .field-label {
   display: block;
   font-family: 'Space Mono', monospace;
@@ -309,6 +338,40 @@ input[type="text"] {
 }
 input::placeholder { color: var(--muted); font-size: 13px; }
 input:focus { border-color: var(--accent); }
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.input-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.input-row input[type="text"] {
+  flex: 3;
+  margin-bottom: 0;
+}
+.input-row select {
+  flex: 1;
+  min-width: 0;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 10px 8px;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  outline: none;
+  cursor: pointer;
+}
+.input-row select:focus {
+  border-color: var(--accent);
+}
+
 .calc-btn {
   width: 100%;
   background: rgba(91,143,168,0.12);
@@ -328,6 +391,33 @@ input:focus { border-color: var(--accent); }
   background: rgba(91,143,168,0.22);
   color: #fff;
 }
+.calc-btn:active {
+  transform: scale(0.97);
+}
+.reverse-card .calc-btn {
+  background: rgba(106, 154, 139, 0.12);
+  border-color: var(--reverse);
+  color: var(--reverse);
+}
+.reverse-card .calc-btn:hover {
+  background: rgba(106, 154, 139, 0.22);
+  color: #fff;
+}
+
+.field-hint {
+  font-size: 11px;
+  color: var(--muted);
+  margin: -4px 0 10px;
+  line-height: 1.45;
+}
+
+.tip {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 8px;
+}
+
 .result {
   margin-top: 12px;
   padding: 12px 14px;
@@ -342,10 +432,20 @@ input:focus { border-color: var(--accent); }
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: box-shadow 0.2s;
+  word-break: break-word;
 }
 .result.has-result {
   color: var(--heading);
   border-color: rgba(91,143,168,0.3);
+  box-shadow: 0 0 0 1px rgba(91,143,168,0.1),
+              0 0 18px rgba(91,143,168,0.08);
+}
+.reverse-card .result.has-result {
+  color: var(--reverse);
+  border-color: rgba(106,154,139,0.3);
+  box-shadow: 0 0 0 1px rgba(106,154,139,0.1),
+              0 0 18px rgba(106,154,139,0.08);
 }
 .result.error {
   color: #c07a7a;
@@ -353,25 +453,11 @@ input:focus { border-color: var(--accent); }
   font-size: 12px;
   line-height: 1.5;
 }
-.field-hint {
-  font-size: 11px;
-  color: var(--muted);
-  margin: -4px 0 10px;
-  line-height: 1.45;
-}
-.tip {
-  font-size: 12px;
-  color: var(--muted);
-  text-align: center;
-  margin-top: 8px;
-}
+
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.page .fcard:nth-child(6) { animation-delay: 0.05s; }
-.page .fcard:nth-child(7) { animation-delay: 0.10s; }
-.page .fcard:nth-child(8) { animation-delay: 0.15s; }
 </style>
 </head>
 <body>
@@ -382,12 +468,13 @@ input:focus { border-color: var(--accent); }
     <p class="subtitle">Mol ve tanecik — virgül veya nokta kullanabilirsin</p>
   </header>
 
+  <!-- ========== UYARI KARTI ========== -->
   <div class="warn-card">
     <span class="warn-badge">Önemli — karıştırma</span>
     <p class="warn-title">Atom numarası ile kütle numarası aynı şey değildir. Mol hesabında kütle numarası kullanılır.</p>
     <ul>
       <li><strong>Atom numarası (Z)</strong> = o elementteki <strong>proton</strong> sayısı (periyodik tabloda üstteki küçük sayı).</li>
-      <li><strong>Kütle numarası (A)</strong> = <strong>proton + nötron</strong> sayısının toplamı. TYT’de buna göre <strong>atom kütlesi</strong> alınır.</li>
+      <li><strong>Kütle numarası (A)</strong> = <strong>proton + nötron</strong> sayısının toplamı. TYT'de buna göre <strong>atom kütlesi</strong> alınır.</li>
       <li>Hesaplayıcıda <strong>M (g/mol)</strong> yazarken atom numarasına değil, elementlerin <strong>kütle numarasına</strong> bakılır.</li>
     </ul>
     <div class="warn-examples">
@@ -422,6 +509,7 @@ input:focus { border-color: var(--accent); }
     </div>
   </div>
 
+  <!-- ========== BİLGİ KARTLARI ========== -->
   <div class="info-card">
     <div class="info-title">Mol Nedir?</div>
     <ul>
@@ -450,18 +538,25 @@ input:focus { border-color: var(--accent); }
     </ul>
   </div>
 
+  <!-- ========== MOL HESAPLAMA (İLERİ YÖN) ========== -->
+  <div class="section-divider">
+    <span class="section-label">Verilen → Mol</span>
+  </div>
+
+  <!-- 1. Kütleden Mol -->
   <div class="fcard">
     <div class="fcard-title">Kütleden Mol</div>
     <div class="fcard-formula">n = m / M</div>
     <label class="field-label" for="m1-m">Kütle — m (g)</label>
-    <input type="text" id="m1-m" inputmode="decimal" placeholder="örn. 36" data-no-e="1">
+    <input type="text" id="m1-m" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="örn. 36">
     <p class="field-hint">e veya 10²³ yazma — sadece gram (36 veya 18,5).</p>
     <label class="field-label" for="m1-M">Molar kütle — M (g/mol)</label>
-    <input type="text" id="m1-M" inputmode="decimal" placeholder="örn. 18" data-no-e="1">
+    <input type="text" id="m1-M" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="örn. 18">
     <button type="button" class="calc-btn" id="btn-m1">Hesapla</button>
     <div class="result" id="m1-res" aria-live="polite">—</div>
   </div>
 
+  <!-- 2. Tanecikten Mol -->
   <div class="fcard">
     <div class="fcard-title">Tanecik Sayısından Mol</div>
     <div class="fcard-formula">n = N / Nₐ</div>
@@ -474,98 +569,171 @@ input:focus { border-color: var(--accent); }
       </div>
     </div>
     <label class="field-label" for="m2-N">Tanecik sayısı — N</label>
-    <input type="text" id="m2-N" inputmode="numeric" placeholder="örn. 301000000000000000000000 veya 3,01e23">
-    <p class="field-hint">TYT’de N çok büyüktür. 54 gibi küçük sayılar kabul edilmez (sonuç e ile çıkar).</p>
+    <div class="input-row">
+      <input type="text" id="m2-N" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="Örn: 3,01">
+      <select id="m2-exp" aria-label="Üs çarpanı">
+        <option value="1">Sade</option>
+        <option value="1e22">× 10²²</option>
+        <option value="1e23" selected>× 10²³</option>
+        <option value="1e24">× 10²⁴</option>
+      </select>
+    </div>
+    <p class="field-hint">Sayıyı yaz, yanından ×10 üssü seç. Örnek: 3,01 + ×10²³ → 3,01×10²³ tanecik.</p>
     <button type="button" class="calc-btn" id="btn-m2">Hesapla</button>
     <div class="result" id="m2-res" aria-live="polite">—</div>
   </div>
 
+  <!-- 3. Gaz Hacminden Mol -->
   <div class="fcard">
     <div class="fcard-title">Gaz Hacminden Mol</div>
     <div class="fcard-formula">n = V / Vₘ</div>
     <div class="stp-options">
       <button type="button" class="stp-btn active" data-stp="22.4">STP 0°C<br>22,4 L/mol</button>
-      <button type="button" class="stp-btn" data-stp="24.5">NTP 25°C<br>24,5 L/mol</button>
+      <button type="button" class="stp-btn" data-stp="24.5">NTP 25°C (yaklaşık)<br>24,5 L/mol</button>
     </div>
     <label class="field-label" for="m3-V">Hacim — V (L)</label>
-    <input type="text" id="m3-V" inputmode="decimal" placeholder="örn. 22,4" data-no-e="1">
-    <p class="field-hint">e yazma — litre olarak gir (22,4 veya 11,2).</p>
+    <input type="text" id="m3-V" inputmode="decimal" autocomplete="off" spellcheck="false" aria-describedby="m3-hint" placeholder="örn. 22,4">
+    <p class="field-hint" id="m3-hint">e yazma — litre olarak gir (22,4 veya 11,2).</p>
     <button type="button" class="calc-btn" id="btn-m3">Hesapla</button>
     <div class="result" id="m3-res" aria-live="polite">—</div>
   </div>
 
-  <p class="tip">Sonuç her zaman düz sayı + mol olur. Çok küçük/büyük sonuçlar (e harfi gerekenler) hesaplanmaz — kafan karışmasın diye.</p>
+  <!-- ========== TERS HESAPLAMA (Mol → Verilen) ========== -->
+  <div class="section-divider">
+    <span class="section-label">Mol → Verilen</span>
+  </div>
+
+  <!-- 4. Molden Kütle -->
+  <div class="fcard reverse-card">
+    <div class="fcard-title">Molden Kütle</div>
+    <div class="fcard-formula">m = n × M</div>
+    <label class="field-label" for="r1-n">Mol — n (mol)</label>
+    <input type="text" id="r1-n" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="örn. 2">
+    <label class="field-label" for="r1-M">Molar kütle — M (g/mol)</label>
+    <input type="text" id="r1-M" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="örn. 18">
+    <button type="button" class="calc-btn" id="btn-r1">Hesapla</button>
+    <div class="result" id="r1-res" aria-live="polite">—</div>
+  </div>
+
+  <!-- 5. Molden Tanecik -->
+  <div class="fcard reverse-card">
+    <div class="fcard-title">Molden Tanecik Sayısı</div>
+    <div class="fcard-formula">N = n × Nₐ</div>
+    <div class="na-group">
+      <div class="na-label">Avogadro (Nₐ)</div>
+      <div class="na-options" id="na-options-reverse">
+        <button type="button" class="na-btn active" data-na="6.022e23">6,022×10²³<br><span class="na-hint">Standart</span></button>
+        <button type="button" class="na-btn" data-na="6.02e23">6,02×10²³<br><span class="na-hint">Sınav</span></button>
+        <button type="button" class="na-btn" data-na="6.023e23">6,023×10²³<br><span class="na-hint">Alternatif</span></button>
+      </div>
+    </div>
+    <label class="field-label" for="r2-n">Mol — n (mol)</label>
+    <input type="text" id="r2-n" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="örn. 0,5">
+    <button type="button" class="calc-btn" id="btn-r2">Hesapla</button>
+    <div class="result" id="r2-res" aria-live="polite">—</div>
+  </div>
+
+  <!-- 6. Molden Gaz Hacmi -->
+  <div class="fcard reverse-card">
+    <div class="fcard-title">Molden Gaz Hacmi</div>
+    <div class="fcard-formula">V = n × Vₘ</div>
+    <div class="stp-options" id="stp-options-reverse">
+      <button type="button" class="stp-btn active" data-stp="22.4">STP 0°C<br>22,4 L/mol</button>
+      <button type="button" class="stp-btn" data-stp="24.5">NTP 25°C (yaklaşık)<br>24,5 L/mol</button>
+    </div>
+    <label class="field-label" for="r3-n">Mol — n (mol)</label>
+    <input type="text" id="r3-n" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="örn. 1">
+    <button type="button" class="calc-btn" id="btn-r3">Hesapla</button>
+    <div class="result" id="r3-res" aria-live="polite">—</div>
+  </div>
+
+  <p class="tip">Sonuç her zaman düz sayı + birim olur. Çok küçük/büyük sonuçlar (e harfi gerekenler) hesaplanmaz — kafan karışmasın diye.</p>
 </div>
 
 <script>
+"use strict";
+
 (function () {
-  var NA = 6.022e23;
-  var stpVol = 22.4;
-  /* TYT: bu aralık dışında sonuç e ile yazılır veya anlamsız uzun ondalık olur */
-  var TYT_MIN_MOL = 0.0001;
-  var TYT_MAX_MOL = 1000000;
+  // Bağımsız değişkenler — ileri ve ters yön birbirini etkilemez
+  let NA = 6.022e23;
+  let NA_REVERSE = 6.022e23;
+  let stpVol = 22.4;
+  let stpVolReverse = 22.4;
 
-  var MSG_E_INPUT = "Burada e veya üslü yazma. Virgül/nokta ile gir (ör. 36). Tanecik kutusunda 3,01e23 kullanabilirsin.";
-  var MSG_EMPTY = "Lütfen sayı gir.";
-  var MSG_RANGE = "Bu girdilerle sonuç çok küçük veya çok büyük — e harfi çıkar, gösteremiyoruz. TYT’deki gibi sayıları dene (ör. büyük tanecik, 36 g / 18 g·mol⁻¹).";
+  const TYT_MIN_MOL = 0.0001;
+  const TYT_MAX_MOL = 1000000;
 
-  function hasScientificNotationInInput(raw) {
-    return /[eE]/.test(String(raw));
-  }
+  const MSG_E_INPUT = "Burada e veya üslü yazma. Virgül/nokta ile gir (örn. 36). Tanecikte sayı + yandaki ×10 üssü menüsünü kullan.";
+  const MSG_EMPTY = "Lütfen sayı gir.";
+  const MSG_RANGE = "Bu girdilerle sonuç çok küçük veya çok büyük — gösteremiyoruz. TYT'deki gibi sayıları dene.";
+  const MSG_RANGE_TANECIK = "Sonuç çok büyük bir tanecik sayısı — gösteremiyoruz. Daha küçük mol değeri dene.";
 
-  function parseSimpleNumber(raw) {
-    if (raw == null || String(raw).trim() === "") return { ok: false, msg: MSG_EMPTY };
-    if (hasScientificNotationInInput(raw)) return { ok: false, msg: MSG_E_INPUT };
-    var s = String(raw).trim().replace(/\s/g, "").replace(",", ".");
-    var n = parseFloat(s);
-    if (!isFinite(n)) return { ok: false, msg: "Geçerli bir sayı değil." };
+  // ---------- PARSE ----------
+  function parseNumber(raw) {
+    if (raw == null || String(raw).trim() === "") {
+      return { ok: false, msg: MSG_EMPTY };
+    }
+    if (/[eE]/.test(String(raw))) {
+      return { ok: false, msg: MSG_E_INPUT };
+    }
+    const s = String(raw).trim().replace(/\s/g, "").replace(",", ".");
+    if (!/^\d+(\.\d+)?$/.test(s)) {
+      return { ok: false, msg: "Geçerli formatta sayı gir. Örnek: 36 veya 18,5" };
+    }
+    const n = Number(s);
+    if (!isFinite(n)) {
+      return { ok: false, msg: "Geçerli bir sayı değil." };
+    }
     return { ok: true, value: n };
   }
 
-  function parseParticleCount(raw) {
-    if (raw == null || String(raw).trim() === "") return { ok: false, msg: MSG_EMPTY };
-    var s = String(raw).trim().replace(/\s/g, "");
-    var normalized = s.replace(",", ".");
-    if (/^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/.test(normalized)) {
-      var n = parseFloat(normalized);
-      if (!isFinite(n) || n <= 0) return { ok: false, msg: "Tanecik sayısı pozitif olmalı." };
-      return { ok: true, value: n };
-    }
-    if (/^\d+$/.test(s)) {
-      try { return { ok: true, value: BigInt(s) }; } catch (e) {
-        return { ok: false, msg: "Sayı çok büyük veya geçersiz." };
-      }
-    }
-    return { ok: false, msg: "Geçersiz tanecik sayısı. Rakam veya 3,01e23 biçimi kullan." };
-  }
-
-  function particleToNumber(N) {
-    return typeof N === "bigint" ? Number(N) : N;
-  }
-
+  // ---------- FORMAT ----------
   function formatResult(n) {
     if (!isFinite(n)) return null;
-    var abs = Math.abs(n);
-    var maxFrac = abs >= 1000 ? 2 : 4;
+    const abs = Math.abs(n);
+    let maxFrac = abs >= 1000 ? 2 : 4;
     if (abs < 1) maxFrac = 6;
-    var formatted = new Intl.NumberFormat("tr-TR", {
+    return new Intl.NumberFormat("tr-TR", {
       useGrouping: false,
       maximumFractionDigits: maxFrac,
       minimumFractionDigits: 0
     }).format(n);
-    if (/[eE]/.test(formatted)) {
-      var sign = n < 0 ? "-" : "";
-      var trimmed = abs.toFixed(maxFrac).replace(/\.?0+$/, "");
-      formatted = sign + trimmed.replace(".", ",");
+  }
+
+  function formatHugeNumber(n) {
+    if (!isFinite(n) || n <= 0) return null;
+    const expString = n.toExponential();
+    const parts = expString.split("e+");
+    if (parts.length === 2) {
+      const base = parseFloat(parts[0]);
+      const exponent = parts[1];
+      // Türkçe virgül formatı
+      const formattedBase = new Intl.NumberFormat("tr-TR", {
+        maximumFractionDigits: 4,
+        minimumFractionDigits: 0
+      }).format(base);
+      return formattedBase + " × 10<sup>" + exponent + "</sup>";
     }
-    return formatted;
+    return n.toLocaleString("tr-TR");
+  }
+
+  // ---------- GÖSTERİM ----------
+  function setResult(id, text, isError = false) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (isError) {
+      el.textContent = text;
+    } else {
+      el.innerHTML = text;
+    }
+    el.className = "result " + (isError ? "error" : "has-result");
   }
 
   function isMolDisplayable(n) {
     if (!isFinite(n) || n <= 0) return false;
-    var abs = Math.abs(n);
+    const abs = Math.abs(n);
     if (abs < TYT_MIN_MOL || abs > TYT_MAX_MOL) return false;
-    var f = formatResult(n);
+    const f = formatResult(n);
     return !!(f && !/[eE]/.test(f));
   }
 
@@ -573,39 +741,51 @@ input:focus { border-color: var(--accent); }
     if (!isMolDisplayable(n)) {
       return setResult(resultId, MSG_RANGE, true);
     }
-    var out = formatResult(n);
+    const out = formatResult(n);
     if (!out || /[eE]/.test(out)) {
       return setResult(resultId, MSG_RANGE, true);
     }
     setResult(resultId, out + " mol", false);
   }
 
-  function setResult(id, text, isError) {
-    var el = document.getElementById(id);
-    el.textContent = text;
-    el.className = "result " + (isError ? "error" : "has-result");
+  function publishTanecik(resultId, n) {
+    if (!isFinite(n) || n <= 0) {
+      return setResult(resultId, MSG_RANGE_TANECIK, true);
+    }
+    const out = formatHugeNumber(n);
+    if (!out) {
+      return setResult(resultId, MSG_RANGE_TANECIK, true);
+    }
+    setResult(resultId, out + " tane", false);
   }
 
-  function setNA(val, btn) {
-    NA = parseFloat(val);
-    var btns = document.querySelectorAll(".na-btn");
-    for (var i = 0; i < btns.length; i++) {
-      btns[i].classList.toggle("active", btns[i] === btn);
+  function publishKutle(resultId, n) {
+    if (!isFinite(n) || n <= 0) return setResult(resultId, MSG_RANGE, true);
+    const out = formatResult(n);
+    if (!out) return setResult(resultId, MSG_RANGE, true);
+    setResult(resultId, out + " g", false);
+  }
+
+  function publishHacim(resultId, n) {
+    if (!isFinite(n) || n <= 0) return setResult(resultId, MSG_RANGE, true);
+    const out = formatResult(n);
+    if (!out) return setResult(resultId, MSG_RANGE, true);
+    setResult(resultId, out + " L", false);
+  }
+
+  // ---------- BUTON AKTİF ----------
+  function setActive(container, btn) {
+    const siblings = container.querySelectorAll("button");
+    for (let i = 0; i < siblings.length; i++) {
+      siblings[i].classList.toggle("active", siblings[i] === btn);
     }
   }
 
-  function setSTP(val, btn) {
-    stpVol = val;
-    var btns = document.querySelectorAll(".stp-btn");
-    for (var i = 0; i < btns.length; i++) {
-      btns[i].classList.toggle("active", btns[i] === btn);
-    }
-  }
-
+  // ---------- HESAPLAMA (İLERİ) ----------
   function calcM1() {
-    var mIn = parseSimpleNumber(document.getElementById("m1-m").value);
+    const mIn = parseNumber(document.getElementById("m1-m").value);
     if (!mIn.ok) return setResult("m1-res", mIn.msg, true);
-    var MIn = parseSimpleNumber(document.getElementById("m1-M").value);
+    const MIn = parseNumber(document.getElementById("m1-M").value);
     if (!MIn.ok) return setResult("m1-res", MIn.msg, true);
     if (mIn.value <= 0) return setResult("m1-res", "Kütle pozitif olmalı", true);
     if (MIn.value <= 0) return setResult("m1-res", "Molar kütle pozitif olmalı", true);
@@ -613,37 +793,97 @@ input:focus { border-color: var(--accent); }
   }
 
   function calcM2() {
-    var parsed = parseParticleCount(document.getElementById("m2-N").value);
-    if (!parsed.ok) return setResult("m2-res", parsed.msg, true);
-    var n = particleToNumber(parsed.value) / NA;
-    publishMol("m2-res", n);
+    const NIn = parseNumber(document.getElementById("m2-N").value);
+    if (!NIn.ok) return setResult("m2-res", NIn.msg, true);
+    if (NIn.value <= 0) return setResult("m2-res", "Tanecik sayısı pozitif olmalı", true);
+    const exp = document.getElementById("m2-exp").value;
+    let multiplier = 1;
+    if (exp === "1e22") multiplier = 1e22;
+    else if (exp === "1e23") multiplier = 1e23;
+    else if (exp === "1e24") multiplier = 1e24;
+    publishMol("m2-res", (NIn.value * multiplier) / NA);
   }
 
   function calcM3() {
-    var VIn = parseSimpleNumber(document.getElementById("m3-V").value);
+    const VIn = parseNumber(document.getElementById("m3-V").value);
     if (!VIn.ok) return setResult("m3-res", VIn.msg, true);
     if (VIn.value <= 0) return setResult("m3-res", "Hacim pozitif olmalı", true);
     publishMol("m3-res", VIn.value / stpVol);
   }
 
-  document.querySelectorAll(".na-btn").forEach(function (btn) {
-    btn.addEventListener("click", function () { setNA(btn.getAttribute("data-na"), btn); });
+  // ---------- HESAPLAMA (TERS) ----------
+  function calcR1() {
+    const nIn = parseNumber(document.getElementById("r1-n").value);
+    if (!nIn.ok) return setResult("r1-res", nIn.msg, true);
+    const MIn = parseNumber(document.getElementById("r1-M").value);
+    if (!MIn.ok) return setResult("r1-res", MIn.msg, true);
+    if (nIn.value <= 0) return setResult("r1-res", "Mol pozitif olmalı", true);
+    if (MIn.value <= 0) return setResult("r1-res", "Molar kütle pozitif olmalı", true);
+    publishKutle("r1-res", nIn.value * MIn.value);
+  }
+
+  function calcR2() {
+    const nIn = parseNumber(document.getElementById("r2-n").value);
+    if (!nIn.ok) return setResult("r2-res", nIn.msg, true);
+    if (nIn.value <= 0) return setResult("r2-res", "Mol pozitif olmalı", true);
+    publishTanecik("r2-res", nIn.value * NA_REVERSE);
+  }
+
+  function calcR3() {
+    const nIn = parseNumber(document.getElementById("r3-n").value);
+    if (!nIn.ok) return setResult("r3-res", nIn.msg, true);
+    if (nIn.value <= 0) return setResult("r3-res", "Mol pozitif olmalı", true);
+    publishHacim("r3-res", nIn.value * stpVolReverse);
+  }
+
+  // ---------- EVENTLER ----------
+  document.querySelectorAll(".fcard:not(.reverse-card) .na-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      NA = parseFloat(btn.getAttribute("data-na"));
+      setActive(btn.parentElement, btn);
+    });
   });
-  document.querySelectorAll(".stp-btn").forEach(function (btn) {
-    btn.addEventListener("click", function () { setSTP(parseFloat(btn.getAttribute("data-stp")), btn); });
+
+  document.querySelectorAll("#na-options-reverse .na-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      NA_REVERSE = parseFloat(btn.getAttribute("data-na"));
+      setActive(btn.parentElement, btn);
+    });
   });
+
+  document.querySelectorAll(".fcard:not(.reverse-card) .stp-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      stpVol = parseFloat(btn.getAttribute("data-stp"));
+      setActive(btn.parentElement, btn);
+    });
+  });
+
+  document.querySelectorAll("#stp-options-reverse .stp-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      stpVolReverse = parseFloat(btn.getAttribute("data-stp"));
+      setActive(btn.parentElement, btn);
+    });
+  });
+
   document.getElementById("btn-m1").addEventListener("click", calcM1);
   document.getElementById("btn-m2").addEventListener("click", calcM2);
   document.getElementById("btn-m3").addEventListener("click", calcM3);
+  document.getElementById("btn-r1").addEventListener("click", calcR1);
+  document.getElementById("btn-r2").addEventListener("click", calcR2);
+  document.getElementById("btn-r3").addEventListener("click", calcR3);
 
-  document.querySelectorAll(".fcard").forEach(function (card) {
-    card.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
-        var btn = card.querySelector(".calc-btn");
-        if (btn) btn.click();
-      }
-    });
-  });
+  // Enter ile hesaplama
+  Array.prototype.forEach.call(
+    document.querySelectorAll(".fcard"),
+    function (card) {
+      card.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          const btn = card.querySelector(".calc-btn");
+          if (btn) btn.click();
+        }
+      });
+    }
+  );
 })();
 </script>
 </body>
