@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Chemly — Hesaplayıcı{% endblock %}
+
+{% block head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/hesaplayici.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="hesaplayici-page">
+  <header>
+    <p class="subject-tag">TYT Kimya</p>
+    <h1>Hesaplayıcı</h1>
+    <p class="subtitle">Mol ve tanecik hesaplamaları — virgül veya nokta kullanabilirsin</p>
+  </header>
+
+  <div class="info-card">
+    <div class="info-title">Mol Nedir?</div>
+    <ul>
+      <li>Madde miktarının birimidir — simgesi <strong>n</strong>, birimi <strong>mol</strong></li>
+      <li>1 mol madde = <strong>6,022 × 10²³</strong> tanecik içerir (Avogadro sayısı)</li>
+      <li>1 mol maddenin gram cinsinden kütlesine <strong>molar kütle (M)</strong> denir</li>
+      <li>Örnek: 1 mol H₂O = 18 g, içinde 6,022 × 10²³ su molekülü vardır</li>
+    </ul>
+  </div>
+
+  <div class="info-card">
+    <div class="info-title">Atom Kütlesi Nedir?</div>
+    <ul>
+      <li>Bir atomun <strong>proton + nötron</strong> sayısına eşit kabul edilir (birim: <strong>u</strong> veya g/mol)</li>
+      <li>Bir elementin atom kütlesi = periyodik tablodaki kütle numarası</li>
+      <li>Bileşiğin molar kütlesi = elementlerin atom kütlelerinin toplamı</li>
+      <li>Örnek: H₂O → (2 × 1) + (1 × 16) = <strong>18 g/mol</strong></li>
+    </ul>
+  </div>
+
+  <div class="info-card">
+    <div class="info-title">Mol Nasıl Hesaplanır?</div>
+    <ul>
+      <li><strong>Kütleden:</strong> n = m / M &nbsp;→ kütle (g) ÷ molar kütle (g/mol)</li>
+      <li><strong>Tanecik sayısından:</strong> n = N / Nₐ &nbsp;→ tanecik sayısı ÷ Avogadro</li>
+      <li><strong>Gaz hacminden (STP):</strong> n = V / 22,4 &nbsp;→ hacim (L) ÷ 22,4 L/mol</li>
+      <li><strong>Gaz hacminden (NTP, 25°C):</strong> n = V / 24,5 &nbsp;→ hacim (L) ÷ 24,5 L/mol</li>
+    </ul>
+  </div>
+
+  <div class="fcard">
+    <div class="fcard-title">Kütleden Mol</div>
+    <div class="fcard-formula">n = m / M</div>
+    <label class="field-label" for="m1-m">Kütle — m (g)</label>
+    <input type="text" id="m1-m" inputmode="decimal" placeholder="örn. 36" autocomplete="off">
+    <label class="field-label" for="m1-M">Molar kütle — M (g/mol)</label>
+    <input type="text" id="m1-M" inputmode="decimal" placeholder="örn. 18" autocomplete="off">
+    <button type="button" class="calc-btn" id="btn-m1">Hesapla</button>
+    <div class="result" id="m1-res" aria-live="polite" aria-atomic="true">—</div>
+  </div>
+
+  <div class="fcard">
+    <div class="fcard-title">Tanecik Sayısından Mol</div>
+    <div class="fcard-formula">n = N / Nₐ</div>
+    <div class="na-group" role="group" aria-label="Avogadro sayısı seçimi">
+      <div class="na-label">Avogadro Sayısı (Nₐ)</div>
+      <div class="na-options">
+        <button type="button" class="na-btn active" data-na="6.022e23" aria-pressed="true">
+          6,022 × 10²³<br><span class="na-hint">Modern standart</span>
+        </button>
+        <button type="button" class="na-btn" data-na="6.02e23" aria-pressed="false">
+          6,02 × 10²³<br><span class="na-hint">Sınav modu</span>
+        </button>
+        <button type="button" class="na-btn" data-na="6.023e23" aria-pressed="false">
+          6,023 × 10²³<br><span class="na-hint">Alternatif</span>
+        </button>
+      </div>
+    </div>
+    <label class="field-label" for="m2-N">Tanecik sayısı — N</label>
+    <input type="text" id="m2-N" inputmode="numeric" placeholder="örn. 301000000000000000000000" autocomplete="off">
+    <button type="button" class="calc-btn" id="btn-m2">Hesapla</button>
+    <div class="result" id="m2-res" aria-live="polite" aria-atomic="true">—</div>
+  </div>
+
+  <div class="fcard">
+    <div class="fcard-title">Gaz Hacminden Mol</div>
+    <div class="fcard-formula">n = V / Vₘ</div>
+    <div class="stp-options" role="group" aria-label="Gaz koşulu seçimi">
+      <button type="button" class="stp-btn active" data-stp="22.4" aria-pressed="true">
+        STP (0°C)<br>22,4 L/mol
+      </button>
+      <button type="button" class="stp-btn" data-stp="24.5" aria-pressed="false">
+        NTP (25°C)<br>24,5 L/mol
+      </button>
+    </div>
+    <label class="field-label" for="m3-V">Hacim — V (L)</label>
+    <input type="text" id="m3-V" inputmode="decimal" placeholder="örn. 22,4" autocomplete="off">
+    <button type="button" class="calc-btn" id="btn-m3">Hesapla</button>
+    <div class="result" id="m3-res" aria-live="polite" aria-atomic="true">—</div>
+  </div>
+
+  <p class="hesaplayici-tip">Sonuçlar yalnızca sayı olarak gösterilir (birim ve bilimsel gösterim yok).</p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/hesaplayici.js') }}"></script>
+{% endblock %}
