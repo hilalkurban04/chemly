@@ -1,18 +1,281 @@
-{% extends "base.html" %}
-{% block title %}Chemly — Hesaplayıcı{% endblock %}
-
-{% block head %}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/hesaplayici.css') }}">
-{% endblock %}
-
-{% block content %}
-<div class="hesaplayici-page">
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemly — Hesaplayıcı</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #06080f;
+  --surface: #0d1117;
+  --border: #1a2332;
+  --text: #dce6f0;
+  --muted: #4a5568;
+  --heading: #89afc7;
+  --accent: #5b8fa8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.75;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+.page {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 50px 20px 80px;
+  position: relative;
+  z-index: 1;
+}
+header { text-align: center; margin-bottom: 36px; }
+.subject-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+h1 {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(18px, 4vw, 26px);
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: -1px;
+}
+.subtitle { font-size: 13px; color: var(--muted); margin-top: 8px; }
+.info-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 22px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.info-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--accent);
+  opacity: 0.4;
+  border-radius: 3px 0 0 3px;
+}
+.info-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--heading);
+  margin-bottom: 12px;
+}
+.info-card ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.info-card ul li {
+  font-size: 13.5px;
+  padding-left: 18px;
+  position: relative;
+}
+.info-card ul li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.info-card ul li strong { color: #e8f0f8; font-weight: 600; }
+.fcard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 22px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  animation: fadeUp 0.4s ease both;
+  transition: border-color 0.2s;
+}
+.fcard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--accent);
+  opacity: 0.5;
+  border-radius: 3px 0 0 3px;
+}
+.fcard:hover { border-color: #2a3a52; }
+.fcard-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--heading);
+  margin-bottom: 8px;
+}
+.fcard-formula {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 14px;
+  padding: 6px 10px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  display: inline-block;
+}
+.na-group { margin-bottom: 14px; }
+.na-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.na-options, .stp-options {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.stp-options { margin-bottom: 10px; }
+.na-btn, .stp-btn {
+  flex: 1;
+  min-width: 100px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  line-height: 1.4;
+}
+.na-btn.active, .stp-btn.active {
+  border-color: var(--accent);
+  color: var(--heading);
+  background: rgba(91,143,168,0.12);
+}
+.na-btn:hover:not(.active), .stp-btn:hover:not(.active) {
+  border-color: #2a3a52;
+  color: var(--text);
+  background: rgba(255,255,255,0.03);
+}
+.na-hint { color: var(--muted); font-size: 9px; }
+.field-label {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+input[type="text"] {
+  width: 100%;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  outline: none;
+  margin-bottom: 8px;
+  transition: border-color 0.2s;
+}
+input::placeholder { color: var(--muted); font-size: 13px; }
+input:focus { border-color: var(--accent); }
+.calc-btn {
+  width: 100%;
+  background: rgba(91,143,168,0.12);
+  border: 1px solid var(--accent);
+  color: var(--heading);
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+  transition: all 0.2s;
+}
+.calc-btn:hover {
+  background: rgba(91,143,168,0.22);
+  color: #fff;
+}
+.result {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-align: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 15px;
+  color: var(--muted);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.result.has-result {
+  color: var(--heading);
+  border-color: rgba(91,143,168,0.3);
+}
+.result.error {
+  color: #c07a7a;
+  border-color: rgba(192,122,122,0.3);
+  font-size: 12px;
+}
+.tip {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 8px;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page .fcard:nth-child(5) { animation-delay: 0.05s; }
+.page .fcard:nth-child(6) { animation-delay: 0.10s; }
+.page .fcard:nth-child(7) { animation-delay: 0.15s; }
+</style>
+</head>
+<body>
+<div class="page">
   <header>
     <p class="subject-tag">TYT Kimya</p>
     <h1>Hesaplayıcı</h1>
-    <p class="subtitle">Mol ve tanecik hesaplamaları — virgül veya nokta kullanabilirsin</p>
+    <p class="subtitle">Mol ve tanecik — virgül veya nokta kullanabilirsin</p>
   </header>
 
   <div class="info-card">
@@ -21,27 +284,26 @@
       <li>Madde miktarının birimidir — simgesi <strong>n</strong>, birimi <strong>mol</strong></li>
       <li>1 mol madde = <strong>6,022 × 10²³</strong> tanecik içerir (Avogadro sayısı)</li>
       <li>1 mol maddenin gram cinsinden kütlesine <strong>molar kütle (M)</strong> denir</li>
-      <li>Örnek: 1 mol H₂O = 18 g, içinde 6,022 × 10²³ su molekülü vardır</li>
+      <li>Örnek: 1 mol H₂O = 18 g</li>
     </ul>
   </div>
 
   <div class="info-card">
     <div class="info-title">Atom Kütlesi Nedir?</div>
     <ul>
-      <li>Bir atomun <strong>proton + nötron</strong> sayısına eşit kabul edilir (birim: <strong>u</strong> veya g/mol)</li>
-      <li>Bir elementin atom kütlesi = periyodik tablodaki kütle numarası</li>
-      <li>Bileşiğin molar kütlesi = elementlerin atom kütlelerinin toplamı</li>
-      <li>Örnek: H₂O → (2 × 1) + (1 × 16) = <strong>18 g/mol</strong></li>
+      <li>Bir atomun <strong>proton + nötron</strong> sayısına eşit kabul edilir</li>
+      <li>Bileşiğin molar kütlesi = element atom kütlelerinin toplamı</li>
+      <li>Örnek: H₂O → (2×1) + (1×16) = <strong>18 g/mol</strong></li>
     </ul>
   </div>
 
   <div class="info-card">
     <div class="info-title">Mol Nasıl Hesaplanır?</div>
     <ul>
-      <li><strong>Kütleden:</strong> n = m / M &nbsp;→ kütle (g) ÷ molar kütle (g/mol)</li>
-      <li><strong>Tanecik sayısından:</strong> n = N / Nₐ &nbsp;→ tanecik sayısı ÷ Avogadro</li>
-      <li><strong>Gaz hacminden (STP):</strong> n = V / 22,4 &nbsp;→ hacim (L) ÷ 22,4 L/mol</li>
-      <li><strong>Gaz hacminden (NTP, 25°C):</strong> n = V / 24,5 &nbsp;→ hacim (L) ÷ 24,5 L/mol</li>
+      <li><strong>Kütleden:</strong> n = m / M</li>
+      <li><strong>Tanecikten:</strong> n = N / Nₐ</li>
+      <li><strong>Gaz (STP):</strong> n = V / 22,4</li>
+      <li><strong>Gaz (NTP, 25°C):</strong> n = V / 24,5</li>
     </ul>
   </div>
 
@@ -49,57 +311,158 @@
     <div class="fcard-title">Kütleden Mol</div>
     <div class="fcard-formula">n = m / M</div>
     <label class="field-label" for="m1-m">Kütle — m (g)</label>
-    <input type="text" id="m1-m" inputmode="decimal" placeholder="örn. 36" autocomplete="off">
+    <input type="text" id="m1-m" inputmode="decimal" placeholder="örn. 36">
     <label class="field-label" for="m1-M">Molar kütle — M (g/mol)</label>
-    <input type="text" id="m1-M" inputmode="decimal" placeholder="örn. 18" autocomplete="off">
+    <input type="text" id="m1-M" inputmode="decimal" placeholder="örn. 18">
     <button type="button" class="calc-btn" id="btn-m1">Hesapla</button>
-    <div class="result" id="m1-res" aria-live="polite" aria-atomic="true">—</div>
+    <div class="result" id="m1-res" aria-live="polite">—</div>
   </div>
 
   <div class="fcard">
     <div class="fcard-title">Tanecik Sayısından Mol</div>
     <div class="fcard-formula">n = N / Nₐ</div>
-    <div class="na-group" role="group" aria-label="Avogadro sayısı seçimi">
-      <div class="na-label">Avogadro Sayısı (Nₐ)</div>
+    <div class="na-group">
+      <div class="na-label">Avogadro (Nₐ)</div>
       <div class="na-options">
-        <button type="button" class="na-btn active" data-na="6.022e23" aria-pressed="true">
-          6,022 × 10²³<br><span class="na-hint">Modern standart</span>
-        </button>
-        <button type="button" class="na-btn" data-na="6.02e23" aria-pressed="false">
-          6,02 × 10²³<br><span class="na-hint">Sınav modu</span>
-        </button>
-        <button type="button" class="na-btn" data-na="6.023e23" aria-pressed="false">
-          6,023 × 10²³<br><span class="na-hint">Alternatif</span>
-        </button>
+        <button type="button" class="na-btn active" data-na="6.022e23">6,022×10²³<br><span class="na-hint">Standart</span></button>
+        <button type="button" class="na-btn" data-na="6.02e23">6,02×10²³<br><span class="na-hint">Sınav</span></button>
+        <button type="button" class="na-btn" data-na="6.023e23">6,023×10²³<br><span class="na-hint">Alternatif</span></button>
       </div>
     </div>
     <label class="field-label" for="m2-N">Tanecik sayısı — N</label>
-    <input type="text" id="m2-N" inputmode="numeric" placeholder="örn. 301000000000000000000000" autocomplete="off">
+    <input type="text" id="m2-N" inputmode="numeric" placeholder="örn. 301000000000000000000000">
     <button type="button" class="calc-btn" id="btn-m2">Hesapla</button>
-    <div class="result" id="m2-res" aria-live="polite" aria-atomic="true">—</div>
+    <div class="result" id="m2-res" aria-live="polite">—</div>
   </div>
 
   <div class="fcard">
     <div class="fcard-title">Gaz Hacminden Mol</div>
     <div class="fcard-formula">n = V / Vₘ</div>
-    <div class="stp-options" role="group" aria-label="Gaz koşulu seçimi">
-      <button type="button" class="stp-btn active" data-stp="22.4" aria-pressed="true">
-        STP (0°C)<br>22,4 L/mol
-      </button>
-      <button type="button" class="stp-btn" data-stp="24.5" aria-pressed="false">
-        NTP (25°C)<br>24,5 L/mol
-      </button>
+    <div class="stp-options">
+      <button type="button" class="stp-btn active" data-stp="22.4">STP 0°C<br>22,4 L/mol</button>
+      <button type="button" class="stp-btn" data-stp="24.5">NTP 25°C<br>24,5 L/mol</button>
     </div>
     <label class="field-label" for="m3-V">Hacim — V (L)</label>
-    <input type="text" id="m3-V" inputmode="decimal" placeholder="örn. 22,4" autocomplete="off">
+    <input type="text" id="m3-V" inputmode="decimal" placeholder="örn. 22,4">
     <button type="button" class="calc-btn" id="btn-m3">Hesapla</button>
-    <div class="result" id="m3-res" aria-live="polite" aria-atomic="true">—</div>
+    <div class="result" id="m3-res" aria-live="polite">—</div>
   </div>
 
-  <p class="hesaplayici-tip">Sonuçlar yalnızca sayı olarak gösterilir (birim ve bilimsel gösterim yok).</p>
+  <p class="tip">Sonuçlar sadece sayıdır (ör. 2 veya 0,5). e yok, mol yazısı yok.</p>
 </div>
-{% endblock %}
 
-{% block scripts %}
-<script src="{{ url_for('static', filename='js/hesaplayici.js') }}"></script>
-{% endblock %}
+<script>
+(function () {
+  var NA = 6.022e23;
+  var stpVol = 22.4;
+
+  function parseTRNumber(raw) {
+    if (raw == null || String(raw).trim() === "") return NaN;
+    var s = String(raw).trim().replace(/\s/g, "").replace(",", ".");
+    var n = parseFloat(s);
+    return isFinite(n) ? n : NaN;
+  }
+
+  function parseParticleCount(raw) {
+    var s = String(raw).trim().replace(/\s/g, "");
+    if (!s) return null;
+    var normalized = s.replace(",", ".");
+    if (/^[+-]?\d+(\.\d+)?([eE][+-]?\d+)?$/.test(normalized)) {
+      var n = parseFloat(normalized);
+      if (!isFinite(n) || n <= 0) return null;
+      return n;
+    }
+    if (/^\d+$/.test(s)) {
+      try { return BigInt(s); } catch (e) { return null; }
+    }
+    return null;
+  }
+
+  function formatResult(n) {
+    if (!isFinite(n)) return null;
+    if (n === 0) return "0";
+    var abs = Math.abs(n);
+    var maxFrac = 6;
+    if (abs >= 1 && abs < 1000) maxFrac = 4;
+    if (abs >= 1000) maxFrac = 2;
+    var formatted = new Intl.NumberFormat("tr-TR", {
+      useGrouping: false,
+      maximumFractionDigits: maxFrac,
+      minimumFractionDigits: 0
+    }).format(n);
+    if (/[eE]/.test(formatted)) {
+      var sign = n < 0 ? "-" : "";
+      var trimmed = Math.abs(n).toFixed(maxFrac).replace(/\.?0+$/, "");
+      formatted = sign + trimmed.replace(".", ",");
+    }
+    return formatted;
+  }
+
+  function setResult(id, text, isError) {
+    var el = document.getElementById(id);
+    el.textContent = text;
+    el.className = "result " + (isError ? "error" : "has-result");
+  }
+
+  function setNA(val, btn) {
+    NA = parseFloat(val);
+    var btns = document.querySelectorAll(".na-btn");
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.toggle("active", btns[i] === btn);
+    }
+  }
+
+  function setSTP(val, btn) {
+    stpVol = val;
+    var btns = document.querySelectorAll(".stp-btn");
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.toggle("active", btns[i] === btn);
+    }
+  }
+
+  function calcM1() {
+    var m = parseTRNumber(document.getElementById("m1-m").value);
+    var M = parseTRNumber(document.getElementById("m1-M").value);
+    if (!isFinite(m) || m <= 0) return setResult("m1-res", "Kütle pozitif olmalı", true);
+    if (!isFinite(M) || M <= 0) return setResult("m1-res", "Molar kütle pozitif olmalı", true);
+    var out = formatResult(m / M);
+    setResult("m1-res", out || "Hata", !out);
+  }
+
+  function calcM2() {
+    var N = parseParticleCount(document.getElementById("m2-N").value);
+    if (N === null) return setResult("m2-res", "Geçersiz tanecik sayısı", true);
+    var n = (typeof N === "bigint" ? Number(N) : N) / NA;
+    var out = formatResult(n);
+    setResult("m2-res", out || "Hata", !out);
+  }
+
+  function calcM3() {
+    var V = parseTRNumber(document.getElementById("m3-V").value);
+    if (!isFinite(V) || V <= 0) return setResult("m3-res", "Hacim pozitif olmalı", true);
+    var out = formatResult(V / stpVol);
+    setResult("m3-res", out || "Hata", !out);
+  }
+
+  document.querySelectorAll(".na-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () { setNA(btn.getAttribute("data-na"), btn); });
+  });
+  document.querySelectorAll(".stp-btn").forEach(function (btn) {
+    btn.addEventListener("click", function () { setSTP(parseFloat(btn.getAttribute("data-stp")), btn); });
+  });
+  document.getElementById("btn-m1").addEventListener("click", calcM1);
+  document.getElementById("btn-m2").addEventListener("click", calcM2);
+  document.getElementById("btn-m3").addEventListener("click", calcM3);
+
+  document.querySelectorAll(".fcard").forEach(function (card) {
+    card.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        var btn = card.querySelector(".calc-btn");
+        if (btn) btn.click();
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
