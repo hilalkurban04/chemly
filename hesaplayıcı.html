@@ -3,7 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chemly — Hesaplayıcı</title>
+
+<title>Mol Hesaplama Aracı (TYT Kimya) | Chemly</title>
+<meta name="description" content="TYT Kimya mol hesaplama aracı. Kütleden mol, tanecik sayısından mol, gaz hacmi hesaplama ve Avogadro sayısı seçeneğiyle adım adım çözüm. Ücretsiz, interaktif.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://hilalkurban04.github.io/chemly/mol.html">
+
+<meta property="og:type"        content="website">
+<meta property="og:title"       content="Mol Hesaplama Aracı (TYT Kimya) | Chemly">
+<meta property="og:description" content="Kütleden mol, tanecikten mol, gaz hacminden mol. Adım adım çözüm ve Avogadro sayısı seçeneğiyle TYT'ye hazırlan.">
+<meta property="og:url"         content="https://hilalkurban04.github.io/chemly/mol.html">
+<meta property="og:image"       content="https://hilalkurban04.github.io/chemly/og-image.png">
+<meta property="og:locale"      content="tr_TR">
+<meta property="og:site_name"   content="Chemly">
+
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="Mol Hesaplama Aracı (TYT Kimya) | Chemly">
+<meta name="twitter:description" content="Kütleden mol, tanecikten mol, gaz hacminden mol. Adım adım çözüm ve Avogadro sayısı seçeneği.">
+<meta name="twitter:image"       content="https://hilalkurban04.github.io/chemly/og-image.png">
+
+<link rel="icon" href="favicon.ico">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -194,10 +213,7 @@ h1 {
   padding-top: 14px;
   border-top: 1px solid rgba(212, 168, 83, 0.25);
 }
-.warn-examples .info-title {
-  color: var(--warn);
-  margin-bottom: 10px;
-}
+.warn-examples .info-title { color: var(--warn); margin-bottom: 10px; }
 .example-table {
   width: 100%;
   font-size: 12.5px;
@@ -249,10 +265,9 @@ h1 {
   opacity: 0.5;
   border-radius: 3px 0 0 3px;
 }
-.fcard.reverse-card::before {
-  background: var(--reverse);
-}
+.fcard.reverse-card::before { background: var(--reverse); }
 .fcard:hover { border-color: #2a3a52; }
+
 .fcard-title {
   font-family: 'Space Mono', monospace;
   font-size: 11px;
@@ -272,6 +287,7 @@ h1 {
   border: 1px solid var(--border);
   display: inline-block;
 }
+
 .na-group { margin-bottom: 14px; }
 .na-label {
   font-family: 'Space Mono', monospace;
@@ -287,32 +303,34 @@ h1 {
   flex-wrap: wrap;
 }
 .stp-options { margin-bottom: 10px; }
+
+/* Avogadro butonları — daha büyük font */
 .na-btn, .stp-btn {
   flex: 1 1 0;
   min-width: 0;
-  padding: 8px 10px;
+  padding: 10px 8px;
   border-radius: 8px;
   border: 1px solid var(--border);
-  background: transparent;
-  color: var(--muted);
+  background: rgba(255,255,255,0.04);
+  color: #8fa8bf;
   font-family: 'Space Mono', monospace;
-  font-size: 10px;
+  font-size: 13px;
   cursor: pointer;
   transition: all 0.2s;
   text-align: center;
-  line-height: 1.4;
+  line-height: 1.7;
 }
+.na-btn sup { font-size: 14px; }
 .na-btn.active, .stp-btn.active {
   border-color: var(--accent);
-  color: var(--heading);
-  background: rgba(91,143,168,0.12);
+  color: #c8dff0;
+  background: rgba(91,143,168,0.18);
 }
 .na-btn:hover:not(.active), .stp-btn:hover:not(.active) {
   border-color: #2a3a52;
   color: var(--text);
-  background: rgba(255,255,255,0.03);
+  background: rgba(255,255,255,0.07);
 }
-.na-hint { color: var(--muted); font-size: 9px; }
 
 .field-label {
   display: block;
@@ -339,37 +357,61 @@ input[type="text"] {
 input::placeholder { color: var(--muted); font-size: 13px; }
 input:focus { border-color: var(--accent); }
 
-button:focus-visible,
-input:focus-visible,
-select:focus-visible {
+button:focus-visible, input:focus-visible, select:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
-.input-row {
-  display: flex;
+/* Tanecik input + seçim grid */
+.tanecik-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 8px;
   margin-bottom: 8px;
 }
-.input-row input[type="text"] {
-  flex: 3;
+.tanecik-row input[type="text"] {
   margin-bottom: 0;
+  font-size: 15px;
 }
-.input-row select {
-  flex: 1;
-  min-width: 0;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-  color: var(--text);
-  border-radius: 8px;
-  padding: 10px 8px;
+
+/* Üs seçim butonları — büyük, okunabilir */
+.exp-label {
   font-family: 'Space Mono', monospace;
   font-size: 10px;
-  outline: none;
-  cursor: pointer;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
 }
-.input-row select:focus {
+.exp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.exp-btn {
+  padding: 10px 6px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.04);
+  color: #8fa8bf;
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  line-height: 1.5;
+}
+.exp-btn sup { font-size: 13px; }
+.exp-btn.active {
   border-color: var(--accent);
+  color: #c8dff0;
+  background: rgba(91,143,168,0.18);
+}
+.exp-btn:hover:not(.active) {
+  border-color: #2a3a52;
+  color: var(--text);
+  background: rgba(255,255,255,0.07);
 }
 
 .calc-btn {
@@ -387,22 +429,15 @@ select:focus-visible {
   margin-top: 4px;
   transition: all 0.2s;
 }
-.calc-btn:hover {
-  background: rgba(91,143,168,0.22);
-  color: #fff;
-}
-.calc-btn:active {
-  transform: scale(0.97);
-}
+.calc-btn:hover { background: rgba(91,143,168,0.22); color: #fff; }
+.calc-btn:active { transform: scale(0.97); }
+
 .reverse-card .calc-btn {
-  background: rgba(106, 154, 139, 0.12);
+  background: rgba(106,154,139,0.12);
   border-color: var(--reverse);
   color: var(--reverse);
 }
-.reverse-card .calc-btn:hover {
-  background: rgba(106, 154, 139, 0.22);
-  color: #fff;
-}
+.reverse-card .calc-btn:hover { background: rgba(106,154,139,0.22); color: #fff; }
 
 .field-hint {
   font-size: 11px;
@@ -410,7 +445,6 @@ select:focus-visible {
   margin: -4px 0 10px;
   line-height: 1.45;
 }
-
 .tip {
   font-size: 12px;
   color: var(--muted);
@@ -438,14 +472,12 @@ select:focus-visible {
 .result.has-result {
   color: var(--heading);
   border-color: rgba(91,143,168,0.3);
-  box-shadow: 0 0 0 1px rgba(91,143,168,0.1),
-              0 0 18px rgba(91,143,168,0.08);
+  box-shadow: 0 0 0 1px rgba(91,143,168,0.1), 0 0 18px rgba(91,143,168,0.08);
 }
 .reverse-card .result.has-result {
   color: var(--reverse);
   border-color: rgba(106,154,139,0.3);
-  box-shadow: 0 0 0 1px rgba(106,154,139,0.1),
-              0 0 18px rgba(106,154,139,0.08);
+  box-shadow: 0 0 0 1px rgba(106,154,139,0.1), 0 0 18px rgba(106,154,139,0.08);
 }
 .result.error {
   color: #c07a7a;
@@ -453,6 +485,21 @@ select:focus-visible {
   font-size: 12px;
   line-height: 1.5;
 }
+
+.steps {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 2;
+  font-family: 'Space Mono', monospace;
+  display: none;
+}
+.steps.visible { display: block; }
+.steps span { color: var(--heading); }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(14px); }
@@ -464,148 +511,143 @@ select:focus-visible {
 <div class="page">
   <header>
     <p class="subject-tag">TYT Kimya</p>
-    <h1>Hesaplayıcı</h1>
-    <p class="subtitle">Mol ve tanecik — virgül veya nokta kullanabilirsin</p>
+    <h1>TYT Kimya Mol Hesaplama Aracı</h1>
+    <p class="subtitle">Kütleden mol, tanecikten mol, gaz hacminden mol — adım adım çözüm</p>
   </header>
 
-  <!-- ========== UYARI KARTI ========== -->
+  <!-- UYARI -->
   <div class="warn-card">
     <span class="warn-badge">Önemli — karıştırma</span>
     <p class="warn-title">Atom numarası ile kütle numarası aynı şey değildir. Mol hesabında kütle numarası kullanılır.</p>
     <ul>
-      <li><strong>Atom numarası (Z)</strong> = o elementteki <strong>proton</strong> sayısı (periyodik tabloda üstteki küçük sayı).</li>
-      <li><strong>Kütle numarası (A)</strong> = <strong>proton + nötron</strong> sayısının toplamı. TYT'de buna göre <strong>atom kütlesi</strong> alınır.</li>
-      <li>Hesaplayıcıda <strong>M (g/mol)</strong> yazarken atom numarasına değil, elementlerin <strong>kütle numarasına</strong> bakılır.</li>
+      <li><strong>Atom numarası (Z)</strong> = çekirdekteki <strong>proton</strong> sayısı.</li>
+      <li><strong>Kütle numarası (A)</strong> = <strong>proton + nötron</strong> toplamı. Mol hesabında bu kullanılır.</li>
+      <li>Hesaplayıcıda <strong>M (g/mol)</strong> yazarken atom numarasına değil <strong>kütle numarasına</strong> bakılır.</li>
     </ul>
     <div class="warn-examples">
       <div class="info-title">Örnekler</div>
       <table class="example-table">
         <thead>
-          <tr>
-            <th>Element</th>
-            <th>Atom no. (Z)</th>
-            <th>Kütle no. (A)</th>
-            <th>Açıklama</th>
-          </tr>
+          <tr><th>Element</th><th>Atom no. (Z)</th><th>Kütle no. (A)</th><th>Açıklama</th></tr>
         </thead>
         <tbody>
-          <tr>
-            <td><strong>O</strong></td>
-            <td>8</td>
-            <td><strong>16</strong></td>
-            <td>8 proton + 8 nötron</td>
-          </tr>
-          <tr>
-            <td><strong>H</strong></td>
-            <td>1</td>
-            <td><strong>1</strong></td>
-            <td>1 proton + 0 nötron (çoğu H atomunda nötron yok)</td>
-          </tr>
+          <tr><td><strong>O</strong></td><td>8</td><td><strong>16</strong></td><td>8 proton + 8 nötron</td></tr>
+          <tr><td><strong>Na</strong></td><td>11</td><td><strong>23</strong></td><td>11 proton + 12 nötron</td></tr>
+          <tr><td><strong>H</strong></td><td>1</td><td><strong>1</strong></td><td>1 proton + 0 nötron</td></tr>
         </tbody>
       </table>
-      <p class="warn-foot">
-        <strong>H₂O</strong> mol kütlesi: (2 × <strong>1</strong>) + (1 × <strong>16</strong>) = <strong>18 g/mol</strong> — burada O için <strong>16</strong> (kütle numarası) kullanılır, 8 (atom numarası) değil.
-      </p>
+      <p class="warn-foot"><strong>H₂O</strong> için M: (2 × <strong>1</strong>) + (1 × <strong>16</strong>) = <strong>18 g/mol</strong></p>
     </div>
   </div>
 
-  <!-- ========== BİLGİ KARTLARI ========== -->
+  <!-- BİLGİ KARTLARI -->
   <div class="info-card">
-    <div class="info-title">Mol Nedir?</div>
+    <h2 class="info-title">Mol Nedir?</h2>
     <ul>
       <li>Madde miktarının birimidir — simgesi <strong>n</strong>, birimi <strong>mol</strong></li>
-      <li>1 mol madde = <strong>6,022 × 10²³</strong> tanecik içerir (Avogadro sayısı)</li>
+      <li>1 mol madde = <strong>6,022 × 10²³</strong> tanecik (Avogadro sayısı)</li>
       <li>1 mol maddenin gram cinsinden kütlesine <strong>molar kütle (M)</strong> denir</li>
-      <li>Örnek: 1 mol H₂O = 18 g</li>
+      <li>Örnek: 1 mol H₂O = <strong>18 g</strong></li>
+      <li>TYT'de Avogadro sayısı genellikle <strong>6 × 10²³</strong> alınır</li>
     </ul>
   </div>
 
   <div class="info-card">
-    <div class="info-title">Molar Kütle (M) — kısa hatırlatma</div>
-    <ul>
-      <li>Bileşikteki her elementin <strong>kütle numarası</strong>, formüldeki sayı ile çarpılır ve toplanır.</li>
-      <li>Yukarıdaki uyarı kutusundaki H₂O örneğine bak: M = <strong>18 g/mol</strong>.</li>
-    </ul>
-  </div>
-
-  <div class="info-card">
-    <div class="info-title">Mol Nasıl Hesaplanır?</div>
+    <h2 class="info-title">Mol Nasıl Hesaplanır?</h2>
     <ul>
       <li><strong>Kütleden:</strong> n = m / M</li>
       <li><strong>Tanecikten:</strong> n = N / Nₐ</li>
-      <li><strong>Gaz (STP):</strong> n = V / 22,4</li>
-      <li><strong>Gaz (NTP, 25°C):</strong> n = V / 24,5</li>
+      <li><strong>Gaz (STP, 0°C):</strong> n = V / 22,4</li>
+      <li><strong>Ters yön:</strong> m = n × M &nbsp;|&nbsp; N = n × Nₐ &nbsp;|&nbsp; V = n × 22,4</li>
     </ul>
   </div>
 
-  <!-- ========== MOL HESAPLAMA (İLERİ YÖN) ========== -->
-  <div class="section-divider">
-    <span class="section-label">Verilen → Mol</span>
+  <div class="info-card">
+    <h2 class="info-title">TYT Kimyada Mol Soruları — Dikkat Edilecekler</h2>
+    <ul>
+      <li>22,4 L/mol yalnızca <strong>gazlar</strong> için geçerlidir — katı ve sıvıya uygulanmaz</li>
+      <li>1 mol O₂ → Nₐ tane molekül, ama <strong>2Nₐ</strong> tane O atomu</li>
+      <li>1 mol NaCl suda → <strong>Nₐ</strong> tane Na⁺ + <strong>Nₐ</strong> tane Cl⁻ = <strong>2Nₐ</strong> iyon</li>
+      <li>Soruda verilen atom kütlelerini kullan — kitaptan farklı olabilir</li>
+    </ul>
   </div>
+
+  <!-- İLERİ YÖN -->
+  <h2 class="info-title" style="margin:36px 0 20px;text-align:center;">Mol Hesaplama Aracı</h2>
+  <div class="section-divider"><span class="section-label">Verilen → Mol</span></div>
 
   <!-- 1. Kütleden Mol -->
   <div class="fcard">
-    <div class="fcard-title">Kütleden Mol</div>
+    <h3 class="fcard-title">Kütleden Mol</h3>
     <div class="fcard-formula">n = m / M</div>
     <label class="field-label" for="m1-m">Kütle — m (g)</label>
     <input type="text" id="m1-m" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="örn. 36">
-    <p class="field-hint">e veya 10²³ yazma — sadece gram (36 veya 18,5).</p>
     <label class="field-label" for="m1-M">Molar kütle — M (g/mol)</label>
     <input type="text" id="m1-M" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="örn. 18">
+    <p class="field-hint">Molar kütle için soruda verilen kütle numaralarını kullan.</p>
     <button type="button" class="calc-btn" id="btn-m1">Hesapla</button>
     <div class="result" id="m1-res" aria-live="polite">—</div>
+    <div class="steps" id="m1-steps"></div>
   </div>
 
   <!-- 2. Tanecikten Mol -->
   <div class="fcard">
-    <div class="fcard-title">Tanecik Sayısından Mol</div>
+    <h3 class="fcard-title">Tanecik Sayısından Mol</h3>
     <div class="fcard-formula">n = N / Nₐ</div>
+
     <div class="na-group">
-      <div class="na-label">Avogadro (Nₐ)</div>
-      <div class="na-options">
-        <button type="button" class="na-btn active" data-na="6.022e23">6,022×10²³<br><span class="na-hint">Standart</span></button>
-        <button type="button" class="na-btn" data-na="6.02e23">6,02×10²³<br><span class="na-hint">Sınav</span></button>
-        <button type="button" class="na-btn" data-na="6.023e23">6,023×10²³<br><span class="na-hint">Alternatif</span></button>
+      <div class="na-label">Avogadro Sayısı (Nₐ)</div>
+      <div class="na-options" id="na-forward">
+        <button type="button" class="na-btn active" data-na="6e23">6×10<sup>²³</sup></button>
+        <button type="button" class="na-btn" data-na="6.02e23">6,02×10<sup>²³</sup></button>
+        <button type="button" class="na-btn" data-na="6.022e23">6,022×10<sup>²³</sup></button>
       </div>
     </div>
-    <label class="field-label" for="m2-N">Tanecik sayısı — N</label>
-    <div class="input-row">
-      <input type="text" id="m2-N" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="Örn: 3,01">
-      <select id="m2-exp" aria-label="Üs çarpanı">
-        <option value="1">Sade</option>
-        <option value="1e22">× 10²²</option>
-        <option value="1e23" selected>× 10²³</option>
-        <option value="1e24">× 10²⁴</option>
-      </select>
+
+    <label class="field-label" for="m2-N">Tanecik sayısı</label>
+    <div class="tanecik-row">
+      <input type="text" id="m2-N" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="örn. 3,01 (üssü ayrı seç)">
+      <input type="text" id="m2-N-exp-display" readonly placeholder="× 10²³ seçildi" style="background:rgba(91,143,168,0.06);border-color:rgba(91,143,168,0.2);color:var(--heading);font-size:12px;cursor:default;">
     </div>
-    <p class="field-hint">Sayıyı yaz, yanından ×10 üssü seç. Örnek: 3,01 + ×10²³ → 3,01×10²³ tanecik.</p>
+
+    <div class="exp-label">10 üssü seç</div>
+    <div class="exp-grid" id="exp-grid-fwd">
+      <button type="button" class="exp-btn" data-exp="1">× 1<br><span style="font-size:10px;color:var(--muted)">üssüz</span></button>
+      <button type="button" class="exp-btn" data-exp="1e20">× 10<sup>20</sup></button>
+      <button type="button" class="exp-btn" data-exp="1e21">× 10<sup>21</sup></button>
+      <button type="button" class="exp-btn" data-exp="1e22">× 10<sup>22</sup></button>
+      <button type="button" class="exp-btn active" data-exp="1e23">× 10<sup>23</sup></button>
+      <button type="button" class="exp-btn" data-exp="1e24">× 10<sup>24</sup></button>
+    </div>
+
+    <p class="field-hint">Sayıyı yaz, üssü seç. Örnek: 3,01 + 10²³ → 3,01 × 10²³ tanecik</p>
     <button type="button" class="calc-btn" id="btn-m2">Hesapla</button>
     <div class="result" id="m2-res" aria-live="polite">—</div>
+    <div class="steps" id="m2-steps"></div>
   </div>
 
   <!-- 3. Gaz Hacminden Mol -->
   <div class="fcard">
-    <div class="fcard-title">Gaz Hacminden Mol</div>
+    <h3 class="fcard-title">Gaz Hacminden Mol</h3>
     <div class="fcard-formula">n = V / Vₘ</div>
-    <div class="stp-options">
-      <button type="button" class="stp-btn active" data-stp="22.4">STP 0°C<br>22,4 L/mol</button>
-      <button type="button" class="stp-btn" data-stp="24.5">NTP 25°C (yaklaşık)<br>24,5 L/mol</button>
+    <div class="stp-options" id="stp-forward">
+      <button type="button" class="stp-btn active" data-stp="22.4">STP — 0°C &nbsp; 22,4 L/mol</button>
+      <button type="button" class="stp-btn" data-stp="24.5">NTP — 25°C &nbsp; 24,5 L/mol</button>
     </div>
     <label class="field-label" for="m3-V">Hacim — V (L)</label>
-    <input type="text" id="m3-V" inputmode="decimal" autocomplete="off" spellcheck="false" aria-describedby="m3-hint" placeholder="örn. 22,4">
-    <p class="field-hint" id="m3-hint">e yazma — litre olarak gir (22,4 veya 11,2).</p>
+    <input type="text" id="m3-V" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="örn. 22,4">
+    <p class="field-hint">Yalnızca gazlar için geçerlidir — katı ve sıvıya uygulanmaz.</p>
     <button type="button" class="calc-btn" id="btn-m3">Hesapla</button>
     <div class="result" id="m3-res" aria-live="polite">—</div>
+    <div class="steps" id="m3-steps"></div>
   </div>
 
-  <!-- ========== TERS HESAPLAMA (Mol → Verilen) ========== -->
-  <div class="section-divider">
-    <span class="section-label">Mol → Verilen</span>
-  </div>
+  <!-- TERS YÖN -->
+  <div class="section-divider"><span class="section-label">Mol → Verilen</span></div>
 
   <!-- 4. Molden Kütle -->
   <div class="fcard reverse-card">
-    <div class="fcard-title">Molden Kütle</div>
+    <h3 class="fcard-title">Molden Kütle</h3>
     <div class="fcard-formula">m = n × M</div>
     <label class="field-label" for="r1-n">Mol — n (mol)</label>
     <input type="text" id="r1-n" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="örn. 2">
@@ -613,86 +655,93 @@ select:focus-visible {
     <input type="text" id="r1-M" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="örn. 18">
     <button type="button" class="calc-btn" id="btn-r1">Hesapla</button>
     <div class="result" id="r1-res" aria-live="polite">—</div>
+    <div class="steps" id="r1-steps"></div>
   </div>
 
   <!-- 5. Molden Tanecik -->
   <div class="fcard reverse-card">
-    <div class="fcard-title">Molden Tanecik Sayısı</div>
+    <h3 class="fcard-title">Molden Tanecik Sayısı</h3>
     <div class="fcard-formula">N = n × Nₐ</div>
     <div class="na-group">
-      <div class="na-label">Avogadro (Nₐ)</div>
-      <div class="na-options" id="na-options-reverse">
-        <button type="button" class="na-btn active" data-na="6.022e23">6,022×10²³<br><span class="na-hint">Standart</span></button>
-        <button type="button" class="na-btn" data-na="6.02e23">6,02×10²³<br><span class="na-hint">Sınav</span></button>
-        <button type="button" class="na-btn" data-na="6.023e23">6,023×10²³<br><span class="na-hint">Alternatif</span></button>
+      <div class="na-label">Avogadro Sayısı (Nₐ)</div>
+      <div class="na-options" id="na-reverse">
+        <button type="button" class="na-btn active" data-na="6e23">6×10<sup>²³</sup></button>
+        <button type="button" class="na-btn" data-na="6.02e23">6,02×10<sup>²³</sup></button>
+        <button type="button" class="na-btn" data-na="6.022e23">6,022×10<sup>²³</sup></button>
       </div>
     </div>
     <label class="field-label" for="r2-n">Mol — n (mol)</label>
     <input type="text" id="r2-n" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="örn. 0,5">
     <button type="button" class="calc-btn" id="btn-r2">Hesapla</button>
     <div class="result" id="r2-res" aria-live="polite">—</div>
+    <div class="steps" id="r2-steps"></div>
   </div>
 
   <!-- 6. Molden Gaz Hacmi -->
   <div class="fcard reverse-card">
-    <div class="fcard-title">Molden Gaz Hacmi</div>
+    <h3 class="fcard-title">Molden Gaz Hacmi</h3>
     <div class="fcard-formula">V = n × Vₘ</div>
-    <div class="stp-options" id="stp-options-reverse">
-      <button type="button" class="stp-btn active" data-stp="22.4">STP 0°C<br>22,4 L/mol</button>
-      <button type="button" class="stp-btn" data-stp="24.5">NTP 25°C (yaklaşık)<br>24,5 L/mol</button>
+    <div class="stp-options" id="stp-reverse">
+      <button type="button" class="stp-btn active" data-stp="22.4">STP — 0°C &nbsp; 22,4 L/mol</button>
+      <button type="button" class="stp-btn" data-stp="24.5">NTP — 25°C &nbsp; 24,5 L/mol</button>
     </div>
     <label class="field-label" for="r3-n">Mol — n (mol)</label>
     <input type="text" id="r3-n" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="örn. 1">
     <button type="button" class="calc-btn" id="btn-r3">Hesapla</button>
     <div class="result" id="r3-res" aria-live="polite">—</div>
+    <div class="steps" id="r3-steps"></div>
   </div>
 
-  <p class="tip">Sonuç her zaman düz sayı + birim olur. Çok küçük/büyük sonuçlar (e harfi gerekenler) hesaplanmaz — kafan karışmasın diye.</p>
+  <p class="tip">Sonuçlar Türkçe virgüllü formatta gösterilir. Çok büyük/küçük değerler bilimsel gösterimle yazılır.</p>
 </div>
 
 <script>
 "use strict";
 
 (function () {
-  // Bağımsız değişkenler — ileri ve ters yön birbirini etkilemez
-  let NA = 6.022e23;
-  let NA_REVERSE = 6.022e23;
-  let stpVol = 22.4;
-  let stpVolReverse = 22.4;
+  let NA_FWD  = 6e23;
+  let NA_REV  = 6e23;
+  let STP_FWD = 22.4;
+  let STP_REV = 22.4;
+  let EXP_FWD = 1e23;
 
-  const TYT_MIN_MOL = 0.0001;
-  const TYT_MAX_MOL = 1000000;
-
-  const MSG_E_INPUT = "Burada e veya üslü yazma. Virgül/nokta ile gir (örn. 36). Tanecikte sayı + yandaki ×10 üssü menüsünü kullan.";
+  const MSG_E     = "Burada e veya üslü yazma. Virgül/nokta ile gir (örn. 36).";
   const MSG_EMPTY = "Lütfen sayı gir.";
-  const MSG_RANGE = "Bu girdilerle sonuç çok küçük veya çok büyük — gösteremiyoruz. TYT'deki gibi sayıları dene.";
-  const MSG_RANGE_TANECIK = "Sonuç çok büyük bir tanecik sayısı — gösteremiyoruz. Daha küçük mol değeri dene.";
+  const MSG_POS   = "Değer sıfırdan büyük olmalı.";
+  const MSG_RANGE = "Sonuç çok büyük veya küçük — TYT'deki gibi sayıları dene.";
 
-  // ---------- PARSE ----------
-  function parseNumber(raw) {
-    if (raw == null || String(raw).trim() === "") {
-      return { ok: false, msg: MSG_EMPTY };
-    }
-    if (/[eE]/.test(String(raw))) {
-      return { ok: false, msg: MSG_E_INPUT };
-    }
-    const s = String(raw).trim().replace(/\s/g, "").replace(",", ".");
-    if (!/^\d+(\.\d+)?$/.test(s)) {
-      return { ok: false, msg: "Geçerli formatta sayı gir. Örnek: 36 veya 18,5" };
-    }
+  // ─── Parse ─────────────────────────────────────────────────
+  function parse(raw) {
+    if (!raw || String(raw).trim() === "") return { ok: false, msg: MSG_EMPTY };
+    if (/[eE]/.test(String(raw)))           return { ok: false, msg: MSG_E };
+    const s = String(raw).trim().replace(/\s/g,"").replace(",",".");
+    if (!/^\d+(\.\d+)?$/.test(s))           return { ok: false, msg: "Geçerli sayı gir. Örnek: 36 veya 18,5" };
     const n = Number(s);
-    if (!isFinite(n)) {
-      return { ok: false, msg: "Geçerli bir sayı değil." };
-    }
+    if (!isFinite(n) || n <= 0)             return { ok: false, msg: MSG_POS };
     return { ok: true, value: n };
   }
 
-  // ---------- FORMAT ----------
-  function formatResult(n) {
-    if (!isFinite(n)) return null;
+  // ─── Format ────────────────────────────────────────────────
+  function fmtTR(n, maxFrac) {
+    return new Intl.NumberFormat("tr-TR", {
+      useGrouping: false,
+      maximumFractionDigits: maxFrac ?? 4,
+      minimumFractionDigits: 0
+    }).format(n);
+  }
+
+  function fmtSci(n) {
+    if (!isFinite(n) || n <= 0) return null;
+    const e = Math.floor(Math.log10(n));
+    const b = n / Math.pow(10, e);
+    const sup = String(e).split('').map(c => ({'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹'}[c]||c)).join('');
+    return fmtTR(b, 3) + " × 10" + sup;
+  }
+
+  function fmtMol(n) {
+    if (!isFinite(n) || n <= 0) return null;
     const abs = Math.abs(n);
-    let maxFrac = abs >= 1000 ? 2 : 4;
-    if (abs < 1) maxFrac = 6;
+    const maxFrac = abs < 1 ? 8 : 4;
     return new Intl.NumberFormat("tr-TR", {
       useGrouping: false,
       maximumFractionDigits: maxFrac,
@@ -700,171 +749,124 @@ select:focus-visible {
     }).format(n);
   }
 
-  function formatHugeNumber(n) {
-    if (!isFinite(n) || n <= 0) return null;
-    const expString = n.toExponential();
-    const parts = expString.split("e+");
-    if (parts.length === 2) {
-      const base = parseFloat(parts[0]);
-      const exponent = parts[1];
-      // Türkçe virgül formatı
-      const formattedBase = new Intl.NumberFormat("tr-TR", {
-        maximumFractionDigits: 4,
-        minimumFractionDigits: 0
-      }).format(base);
-      return formattedBase + " × 10<sup>" + exponent + "</sup>";
-    }
-    return n.toLocaleString("tr-TR");
-  }
-
-  // ---------- GÖSTERİM ----------
-  function setResult(id, text, isError = false) {
+  // ─── Gösterim ──────────────────────────────────────────────
+  function setRes(id, html, isErr) {
     const el = document.getElementById(id);
     if (!el) return;
-    if (isError) {
-      el.textContent = text;
-    } else {
-      el.innerHTML = text;
-    }
-    el.className = "result " + (isError ? "error" : "has-result");
+    if (isErr) el.textContent = html; else el.innerHTML = html;
+    el.className = "result " + (isErr ? "error" : "has-result");
   }
 
-  function isMolDisplayable(n) {
-    if (!isFinite(n) || n <= 0) return false;
-    const abs = Math.abs(n);
-    if (abs < TYT_MIN_MOL || abs > TYT_MAX_MOL) return false;
-    const f = formatResult(n);
-    return !!(f && !/[eE]/.test(f));
+  function setSteps(id, html) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = html;
+    el.classList.add("visible");
   }
 
-  function publishMol(resultId, n) {
-    if (!isMolDisplayable(n)) {
-      return setResult(resultId, MSG_RANGE, true);
-    }
-    const out = formatResult(n);
-    if (!out || /[eE]/.test(out)) {
-      return setResult(resultId, MSG_RANGE, true);
-    }
-    setResult(resultId, out + " mol", false);
+  function err(id, msg) {
+    setRes(id, msg, true);
+    document.getElementById(id.replace("res","steps"))?.classList.remove("visible");
   }
 
-  function publishTanecik(resultId, n) {
-    if (!isFinite(n) || n <= 0) {
-      return setResult(resultId, MSG_RANGE_TANECIK, true);
-    }
-    const out = formatHugeNumber(n);
-    if (!out) {
-      return setResult(resultId, MSG_RANGE_TANECIK, true);
-    }
-    setResult(resultId, out + " tane", false);
-  }
-
-  function publishKutle(resultId, n) {
-    if (!isFinite(n) || n <= 0) return setResult(resultId, MSG_RANGE, true);
-    const out = formatResult(n);
-    if (!out) return setResult(resultId, MSG_RANGE, true);
-    setResult(resultId, out + " g", false);
-  }
-
-  function publishHacim(resultId, n) {
-    if (!isFinite(n) || n <= 0) return setResult(resultId, MSG_RANGE, true);
-    const out = formatResult(n);
-    if (!out) return setResult(resultId, MSG_RANGE, true);
-    setResult(resultId, out + " L", false);
-  }
-
-  // ---------- BUTON AKTİF ----------
-  function setActive(container, btn) {
-    const siblings = container.querySelectorAll("button");
-    for (let i = 0; i < siblings.length; i++) {
-      siblings[i].classList.toggle("active", siblings[i] === btn);
-    }
-  }
-
-  // ---------- HESAPLAMA (İLERİ) ----------
+  // ─── Hesaplamalar ──────────────────────────────────────────
   function calcM1() {
-    const mIn = parseNumber(document.getElementById("m1-m").value);
-    if (!mIn.ok) return setResult("m1-res", mIn.msg, true);
-    const MIn = parseNumber(document.getElementById("m1-M").value);
-    if (!MIn.ok) return setResult("m1-res", MIn.msg, true);
-    if (mIn.value <= 0) return setResult("m1-res", "Kütle pozitif olmalı", true);
-    if (MIn.value <= 0) return setResult("m1-res", "Molar kütle pozitif olmalı", true);
-    publishMol("m1-res", mIn.value / MIn.value);
+    const m = parse(document.getElementById("m1-m").value); if (!m.ok) return err("m1-res", m.msg);
+    const M = parse(document.getElementById("m1-M").value); if (!M.ok) return err("m1-res", M.msg);
+    const n = m.value / M.value;
+    const out = fmtMol(n); if (!out) return err("m1-res", MSG_RANGE);
+    setRes("m1-res", out + " mol", false);
+    setSteps("m1-steps", `n = m / M<br>n = <span>${fmtTR(m.value)} g</span> / <span>${fmtTR(M.value)} g/mol</span><br>n = <span>${out} mol</span>`);
   }
 
   function calcM2() {
-    const NIn = parseNumber(document.getElementById("m2-N").value);
-    if (!NIn.ok) return setResult("m2-res", NIn.msg, true);
-    if (NIn.value <= 0) return setResult("m2-res", "Tanecik sayısı pozitif olmalı", true);
-    const exp = document.getElementById("m2-exp").value;
-    let multiplier = 1;
-    if (exp === "1e22") multiplier = 1e22;
-    else if (exp === "1e23") multiplier = 1e23;
-    else if (exp === "1e24") multiplier = 1e24;
-    publishMol("m2-res", (NIn.value * multiplier) / NA);
+    const N = parse(document.getElementById("m2-N").value); if (!N.ok) return err("m2-res", N.msg);
+    const total = N.value * EXP_FWD;
+    const n = total / NA_FWD;
+    const out = fmtMol(n); if (!out) return err("m2-res", MSG_RANGE);
+    setRes("m2-res", out + " mol", false);
+    const Ndisp  = fmtTR(total, 3);
+    const Nadisp = fmtTR(NA_FWD, 3);
+    setSteps("m2-steps", `n = N / Nₐ<br>n = <span>${Ndisp}</span> / <span>${Nadisp}</span><br>n = <span>${out} mol</span>`);
   }
 
   function calcM3() {
-    const VIn = parseNumber(document.getElementById("m3-V").value);
-    if (!VIn.ok) return setResult("m3-res", VIn.msg, true);
-    if (VIn.value <= 0) return setResult("m3-res", "Hacim pozitif olmalı", true);
-    publishMol("m3-res", VIn.value / stpVol);
+    const V = parse(document.getElementById("m3-V").value); if (!V.ok) return err("m3-res", V.msg);
+    const n = V.value / STP_FWD;
+    const out = fmtMol(n); if (!out) return err("m3-res", MSG_RANGE);
+    setRes("m3-res", out + " mol", false);
+    setSteps("m3-steps", `n = V / Vₘ<br>n = <span>${fmtTR(V.value)} L</span> / <span>${fmtTR(STP_FWD)} L/mol</span><br>n = <span>${out} mol</span>`);
   }
 
-  // ---------- HESAPLAMA (TERS) ----------
   function calcR1() {
-    const nIn = parseNumber(document.getElementById("r1-n").value);
-    if (!nIn.ok) return setResult("r1-res", nIn.msg, true);
-    const MIn = parseNumber(document.getElementById("r1-M").value);
-    if (!MIn.ok) return setResult("r1-res", MIn.msg, true);
-    if (nIn.value <= 0) return setResult("r1-res", "Mol pozitif olmalı", true);
-    if (MIn.value <= 0) return setResult("r1-res", "Molar kütle pozitif olmalı", true);
-    publishKutle("r1-res", nIn.value * MIn.value);
+    const n = parse(document.getElementById("r1-n").value); if (!n.ok) return err("r1-res", n.msg);
+    const M = parse(document.getElementById("r1-M").value); if (!M.ok) return err("r1-res", M.msg);
+    const m = n.value * M.value;
+    const out = fmtMol(m); if (!out) return err("r1-res", MSG_RANGE);
+    setRes("r1-res", out + " g", false);
+    setSteps("r1-steps", `m = n × M<br>m = <span>${fmtTR(n.value)} mol</span> × <span>${fmtTR(M.value)} g/mol</span><br>m = <span>${out} g</span>`);
   }
 
   function calcR2() {
-    const nIn = parseNumber(document.getElementById("r2-n").value);
-    if (!nIn.ok) return setResult("r2-res", nIn.msg, true);
-    if (nIn.value <= 0) return setResult("r2-res", "Mol pozitif olmalı", true);
-    publishTanecik("r2-res", nIn.value * NA_REVERSE);
+    const n = parse(document.getElementById("r2-n").value); if (!n.ok) return err("r2-res", n.msg);
+    const N = n.value * NA_REV;
+    const out = fmtTR(N, 3); if (!out) return err("r2-res", MSG_RANGE);
+    setRes("r2-res", out + " tane", false);
+    const Nadisp = fmtTR(NA_REV, 3);
+    setSteps("r2-steps", `N = n × Nₐ<br>N = <span>${fmtTR(n.value)} mol</span> × <span>${Nadisp}</span><br>N = <span>${out} tane</span>`);
   }
 
   function calcR3() {
-    const nIn = parseNumber(document.getElementById("r3-n").value);
-    if (!nIn.ok) return setResult("r3-res", nIn.msg, true);
-    if (nIn.value <= 0) return setResult("r3-res", "Mol pozitif olmalı", true);
-    publishHacim("r3-res", nIn.value * stpVolReverse);
+    const n = parse(document.getElementById("r3-n").value); if (!n.ok) return err("r3-res", n.msg);
+    const V = n.value * STP_REV;
+    const out = fmtMol(V); if (!out) return err("r3-res", MSG_RANGE);
+    setRes("r3-res", out + " L", false);
+    setSteps("r3-steps", `V = n × Vₘ<br>V = <span>${fmtTR(n.value)} mol</span> × <span>${fmtTR(STP_REV)} L/mol</span><br>V = <span>${out} L</span>`);
   }
 
-  // ---------- EVENTLER ----------
-  document.querySelectorAll(".fcard:not(.reverse-card) .na-btn").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      NA = parseFloat(btn.getAttribute("data-na"));
-      setActive(btn.parentElement, btn);
+  // ─── Toggle helper ─────────────────────────────────────────
+  function bindToggle(containerId, onChange) {
+    const c = document.getElementById(containerId);
+    if (!c) return;
+    c.querySelectorAll("button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        c.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        onChange(parseFloat(btn.dataset.na || btn.dataset.stp || btn.dataset.exp || 1));
+      });
+    });
+  }
+
+  bindToggle("na-forward",  v => NA_FWD  = v);
+  bindToggle("na-reverse",  v => NA_REV  = v);
+  bindToggle("stp-forward", v => STP_FWD = v);
+  bindToggle("stp-reverse", v => STP_REV = v);
+
+  // Üs grid — günceller display alanını da
+  const expGrid = document.getElementById("exp-grid-fwd");
+  const expDisplay = document.getElementById("m2-N-exp-display");
+
+  const EXP_LABELS = {
+    "1": "× 1 (üssüz)",
+    "1e20": "× 10²⁰ seçildi",
+    "1e21": "× 10²¹ seçildi",
+    "1e22": "× 10²² seçildi",
+    "1e23": "× 10²³ seçildi",
+    "1e24": "× 10²⁴ seçildi",
+  };
+
+  expDisplay.value = "× 10²³ seçildi";
+
+  expGrid.querySelectorAll(".exp-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      expGrid.querySelectorAll(".exp-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      EXP_FWD = parseFloat(btn.dataset.exp);
+      expDisplay.value = EXP_LABELS[btn.dataset.exp] || "seçildi";
     });
   });
 
-  document.querySelectorAll("#na-options-reverse .na-btn").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      NA_REVERSE = parseFloat(btn.getAttribute("data-na"));
-      setActive(btn.parentElement, btn);
-    });
-  });
-
-  document.querySelectorAll(".fcard:not(.reverse-card) .stp-btn").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      stpVol = parseFloat(btn.getAttribute("data-stp"));
-      setActive(btn.parentElement, btn);
-    });
-  });
-
-  document.querySelectorAll("#stp-options-reverse .stp-btn").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      stpVolReverse = parseFloat(btn.getAttribute("data-stp"));
-      setActive(btn.parentElement, btn);
-    });
-  });
-
+  // ─── Hesapla butonları ────────────────────────────────────
   document.getElementById("btn-m1").addEventListener("click", calcM1);
   document.getElementById("btn-m2").addEventListener("click", calcM2);
   document.getElementById("btn-m3").addEventListener("click", calcM3);
@@ -872,19 +874,35 @@ select:focus-visible {
   document.getElementById("btn-r2").addEventListener("click", calcR2);
   document.getElementById("btn-r3").addEventListener("click", calcR3);
 
-  // Enter ile hesaplama
-  Array.prototype.forEach.call(
-    document.querySelectorAll(".fcard"),
-    function (card) {
-      card.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-          const btn = card.querySelector(".calc-btn");
-          if (btn) btn.click();
-        }
-      });
-    }
-  );
+  document.querySelectorAll(".fcard").forEach(card => {
+    card.addEventListener("keydown", e => {
+      if (e.key === "Enter") card.querySelector(".calc-btn")?.click();
+    });
+  });
+
 })();
 </script>
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Mol Hesaplama Aracı",
+  "description": "TYT Kimya mol hesaplama aracı. Kütleden mol, tanecik sayısından mol, gaz hacminden mol hesaplama.",
+  "url": "https://hilalkurban04.github.io/chemly/mol.html",
+  "image": "https://hilalkurban04.github.io/chemly/og-image.png",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "All",
+  "inLanguage": "tr",
+  "isAccessibleForFree": true,
+  "publisher": {
+    "@type": "Organization",
+    "name": "Chemly",
+    "url": "https://hilalkurban04.github.io/chemly/"
+  }
+}
+</script>
+
 </body>
 </html>
+
