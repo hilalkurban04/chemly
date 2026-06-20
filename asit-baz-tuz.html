@@ -254,6 +254,193 @@
             text-transform: uppercase;
             color: var(--heading);
         }
+
+        /* OKSİTLER BÖLÜMÜ */
+        .oxides-section {
+            margin: 30px 0;
+        }
+
+        .oxides-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .oxides-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .oxide-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 18px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .oxide-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .oxide-card-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .oxide-card p {
+            font-size: 12.5px;
+            line-height: 1.5;
+            color: var(--text);
+        }
+
+        .oxide-card.acidic-oxide {
+            border-color: rgba(212, 91, 91, 0.3);
+        }
+        .oxide-card.acidic-oxide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--acid-red);
+        }
+        .oxide-card.acidic-oxide .oxide-card-title { color: var(--acid-red); }
+
+        .oxide-card.neutral-oxide {
+            border-color: rgba(160, 160, 160, 0.3);
+        }
+        .oxide-card.neutral-oxide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: #888;
+        }
+        .oxide-card.neutral-oxide .oxide-card-title { color: #aaa; }
+
+        .oxide-card.basic-oxide {
+            border-color: rgba(91, 140, 212, 0.3);
+        }
+        .oxide-card.basic-oxide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--base-blue);
+        }
+        .oxide-card.basic-oxide .oxide-card-title { color: var(--base-blue); }
+
+        /* TEPKİMELER BÖLÜMÜ */
+        .reactions-section {
+            margin: 30px 0;
+        }
+
+        .reactions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .reactions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .reaction-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 20px;
+            position: relative;
+            overflow: hidden;
+            min-height: 120px;
+            transition: transform 0.2s;
+        }
+
+        .reaction-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .reaction-card.acid-reaction {
+            border-color: rgba(212, 91, 91, 0.25);
+        }
+        .reaction-card.acid-reaction::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--acid-red);
+        }
+        .reaction-card.acid-reaction .reaction-title { color: var(--acid-red); }
+
+        .reaction-card.base-reaction {
+            border-color: rgba(91, 140, 212, 0.25);
+        }
+        .reaction-card.base-reaction::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--base-blue);
+        }
+        .reaction-card.base-reaction .reaction-title { color: var(--base-blue); }
+
+        .reaction-title {
+            font-family: 'Space Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .reaction-card ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .reaction-card ul li {
+            font-size: 13px;
+            padding-left: 18px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .reaction-card ul li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .reaction-card.acid-reaction ul li::before { color: var(--acid-red); }
+        .reaction-card.base-reaction ul li::before { color: var(--base-blue); }
+
+        .reaction-card ul li strong {
+            color: var(--heading);
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -285,21 +472,20 @@
         <div class="fcard acid">
             <div class="fcard-title">🟥 ASİT: Kırmızı (K)</div>
             <ul>
-                <li><strong>Tanım:</strong> Suda çözündüklerinde suya $H^+$ (veya $H_3O^+$) iyonu veren kimyasal bileşikler.</li>
+                <li><strong>Tanım:</strong> Suda çözündüklerinde suya H<sup>+</sup> (veya H<sub>3</sub>O<sup>+</sup>) iyonu veren kimyasal bileşikler.</li>
                 <li><strong>Özellik:</strong> Aşındırıcıdırlar.</li>
                 <li><strong>Turnusol:</strong> Sulu çözeltileri mavi turnusol kağıdını kırmızıya çevirirler.</li>
                 <li><strong>pH Değeri:</strong> 25 derecede pH değerleri 7'den küçüktür.</li>
                 <li><strong>Tat:</strong> Tatları ekşidir.</li>
                 <li><strong>İletkenlik:</strong> Sulu çözeltileri elektrik akımını iletir.</li>
                 <li><strong>İyonlaşma:</strong> Zayıf asitler suda %100 iyonlaşmaz ve denge oluşturur. Güçlü asitler tamamen iyonlaşır.</li>
-                <li><strong>Ametaller:</strong> Ametallerin oksijence zengin bileşikleri asidik özelliktedir ($SO_3$, $P_2O_5$ gibi asidik oksitler).</li>
             </ul>
         </div>
 
         <div class="fcard base">
             <div class="fcard-title">🟦 BAZ: Mavi (M)</div>
             <ul>
-                <li><strong>Tanım:</strong> Suda çözündüklerinde suya $OH^-$ iyonu veren kimyasal bileşikler.</li>
+                <li><strong>Tanım:</strong> Suda çözündüklerinde suya OH<sup>-</sup> iyonu veren kimyasal bileşikler.</li>
                 <li><strong>Özellik:</strong> Ele kayganlık hissi verirler.</li>
                 <li><strong>Turnusol:</strong> Sulu çözeltileri kırmızı turnusol kağıdını maviye çevirir.</li>
                 <li><strong>pH Değeri:</strong> 25 derecede pH değerleri 7'den büyüktür.</li>
@@ -309,6 +495,56 @@
             </ul>
         </div>
 
+    </div>
+
+    <!-- OKSİTLER BÖLÜMÜ -->
+    <div class="oxides-section">
+        <div class="section-divider">
+            <span class="section-label">Oksitler</span>
+        </div>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:10px;">Oksit: En az bir oksijen ve farklı bir elementin birleşmesiyle oluşan kimyasal bileşiklerdir.</p>
+
+        <div class="oxides-grid">
+            <div class="oxide-card acidic-oxide">
+                <div class="oxide-card-title">🟥 Asidik Oksit</div>
+                <p>Ametallerin oksijence zengin oksitlerine denir. Suda çözünerek asit oluşturur. Asitlerle tepkime vermez.</p>
+            </div>
+            <div class="oxide-card neutral-oxide">
+                <div class="oxide-card-title">⬜ Nötr Oksit</div>
+                <p>Oksijen sayısının ametal ile aynı veya az olduğu oksitlerdir. Asit, baz ve suyla tepkime vermezler.</p>
+            </div>
+            <div class="oxide-card basic-oxide">
+                <div class="oxide-card-title">🟦 Bazik Oksit</div>
+                <p>Metallerin oksijenle oluşturduğu bileşiklerdir. Suda çözünerek baz oluşturur.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEPKİMELER BÖLÜMÜ -->
+    <div class="reactions-section">
+        <div class="section-divider">
+            <span class="section-label">Tepkimeler</span>
+        </div>
+
+        <div class="reactions-grid">
+            <div class="reaction-card acid-reaction">
+                <div class="reaction-title">🟥 Asitlerin Tepkimeleri</div>
+                <ul>
+                    <li><strong>• Metal + Asit →</strong> Tuz + H<sub>2</sub></li>
+                    <li><strong>• Baz + Asit →</strong> Tuz + Su (Nötralleşme)</li>
+                    <li><strong>• Amfoter + Asit →</strong> Tuz + H<sub>2</sub></li>
+                    <li><strong>• Asit + Bazik Oksit →</strong> Tuz + Su</li>
+                </ul>
+            </div>
+            <div class="reaction-card base-reaction">
+                <div class="reaction-title">🟦 Bazların Tepkimeleri</div>
+                <ul>
+                    <li><strong>• Baz + Asit →</strong> Tuz + Su (Nötralleşme)</li>
+                    <li><strong>• Baz + Amfoter →</strong> Tuz + H<sub>2</sub></li>
+                    <li><strong>• Baz + Asidik Oksit →</strong> Tuz + Su</li>
+                </ul>
+            </div>
+        </div>
     </div>
 
 </div>
